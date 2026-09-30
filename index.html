@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Saravana Steel Company - Estimate</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f6f9;
+  color:#222;
+}
+
+header{
+  background:#0b1730;
+  color:white;
+  padding:18px 15px;
+  text-align:center;
+}
+
+header h1{
+  margin:0;
+  font-size:22px;
+}
+
+header p{
+  margin:6px 0 0;
+  font-size:13px;
+  line-height:1.5;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:15px;
+}
+
+.card{
+  background:white;
+  border-radius:12px;
+  padding:16px;
+  margin-bottom:15px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+h2{
+  margin-top:0;
+  font-size:18px;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  font-size:13px;
+  margin:10px 0 5px;
+}
+
+input,select,textarea{
+  width:100%;
+  padding:11px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  font-size:15px;
+}
+
+textarea{
+  resize:vertical;
+  min-height:70px;
+}
+
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.item{
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:12px;
+  margin-bottom:10px;
+  background:#fafafa;
+}
+
+.item-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:8px;
+}
+
+.amount-box{
+  margin-top:10px;
+  font-weight:bold;
+  text-align:right;
+}
+
+button{
+  border:0;
+  border-radius:8px;
+  padding:11px 15px;
+  font-size:14px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.add-btn{
+  background:#0b1730;
+  color:white;
+}
+
+.remove-btn{
+  background:#d93025;
+  color:white;
+  margin-top:8px;
+}
+
+.save-btn{
+  background:#16803c;
+  color:white;
+}
+
+.clear-btn{
+  background:#777;
+  color:white;
+}
+
+.total-box{
+  text-align:right;
+  font-size:18px;
+  margin-top:10px;
+}
+
+.grand-total{
+  font-size:25px;
+  font-weight:bold;
+  margin-top:8px;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.actions button{
+  flex:1;
+  min-width:120px;
+}
+
+.estimate-title{
+  text-align:center;
+  font-size:22px;
+  font-weight:bold;
+  text-decoration:underline;
+  margin-bottom:15px;
+}
+
+.saved-list{
+  margin-top:10px;
+}
+
+.saved-estimate{
+  border:1px solid #ddd;
+  padding:12px;
+  border-radius:8px;
+  margin-bottom:8px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.small-buttons{
+  display:flex;
+  gap:5px;
+}
+
+.small-buttons button{
+  padding:7px 10px;
+}
+
+.empty{
+  text-align:center;
+  color:#777;
+  padding:15px;
+}
+
+@media(max-width:600px){
+
+  .row{
+    grid-template-columns:1fr;
+  }
+
+  .item-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .item-grid input:first-child{
+    grid-column:1 / -1;
+  }
+
+  .saved-estimate{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Saravana Steel Company</h1>
+
+  <p>
+    No.7, New Goller Street,<br>
+    (Opp to Bus Stand) Alangayam - 635701<br>
+    📞 9943706320 / 7010795644
+  </p>
+</header>
+
+<div class="container">
+
+  <!-- ESTIMATE -->
+
+  <div class="card">
+
+    <div class="estimate-title">
+      ESTIMATE
+    </div>
+
+    <div class="row">
+
+      <div>
+        <label>Estimate Number</label>
+        <input id="estimateNo" readonly>
+      </div>
+
+      <div>
+        <label>Date</label>
+        <input type="date" id="estimateDate">
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- CUSTOMER -->
+
+  <div class="card">
+
+    <h2>Customer Details (Optional)</h2>
+
+    <label>Customer Name</label>
+    <input id="customerName" placeholder="Enter customer name">
+
+    <div class="row">
+
+      <div>
+        <label>Mobile Number</label>
+        <input id="customerMobile" type="tel" placeholder="Enter mobile number">
+      </div>
+
+      <div>
+        <label>Site Address</label>
+        <input id="siteAddress" placeholder="Enter site address">
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ITEMS -->
+
+  <div class="card">
+
+    <h2>Items</h2>
+
+    <div id="items"></div>
+
+    <button class="add-btn" onclick="addItem()">
+      + Add Item
+    </button>
+
+  </div>
+
+
+  <!-- TOTAL -->
+
+  <div class="card">
+
+    <h2>Bill Summary</h2>
+
+    <label>Discount (Optional)</label>
+
+    <input
+      type="number"
+      id="discount"
+      placeholder="0"
+      min="0"
+      oninput="calculateTotal()"
+    >
+
+    <div class="total-box">
+
+      <div>
+        Sub Total:
+        ₹<span id="subTotal">0.00</span>
+      </div>
+
+      <div>
+        Discount:
+        ₹<span id="discountAmount">0.00</span>
+      </div>
+
+      <div class="grand-total">
+        Grand Total:
+        ₹<span id="grandTotal">0.00</span>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- NOTES -->
+
+  <div class="card">
+
+    <h2>Notes</h2>
+
+    <textarea
+      id="notes"
+      placeholder="Optional notes / terms and conditions"
+    ></textarea>
+
+  </div>
+
+
+  <!-- ACTIONS -->
+
+  <div class="card">
+
+    <div class="actions">
+
+      <button class="save-btn" onclick="saveEstimate()">
+        💾 Save Estimate
+      </button>
+
+      <button class="clear-btn" onclick="newEstimate()">
+        🆕 New Estimate
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- SAVED ESTIMATES -->
+
+  <div class="card">
+
+    <h2>Saved Estimates</h2>
+
+    <div id="savedList"></div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const STORAGE_KEY = "saravana_estimates_v1";
+
+let items = [];
+let editingId = null;
+
+
+/* =========================
+   START
+========================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  document.getElementById("estimateDate").value =
+    new Date().toISOString().split("T")[0];
+
+  document.getElementById("estimateNo").value =
+    generateEstimateNumber();
+
+  addItem();
+
+  renderSavedEstimates();
+
+});
+
+
+/* =========================
+   ESTIMATE NUMBER
+========================= */
+
+function generateEstimateNumber(){
+
+  const estimates =
+    JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+
+  const number = estimates.length + 1;
+
+  const year = new Date().getFullYear();
+
+  return "EST-" + year + "-" + String(number).padStart(4,"0");
+}
+
+
+/* =========================
+   ADD ITEM
+========================= */
+
+function addItem(
+  name = "",
+  qty = "",
+  unit = "Nos",
+  rate = ""
+){
+
+  const id = Date.now() + Math.random();
+
+  items.push({
+    id,
+    name,
+    qty,
+    unit,
+    rate
+  });
+
+  renderItems();
+}
+
+
+/* =========================
+   RENDER ITEMS
+========================= */
+
+function renderItems(){
+
+  const container =
+    document.getElementById("items");
+
+  container.innerHTML = "";
+
+  items.forEach((item,index) => {
+
+    const div =
+      document.createElement("div");
+
+    div.className = "item";
+
+    div.innerHTML = `
+
+      <div class="item-grid">
+
+        <div>
+          <label>Item Name</label>
+
+          <input
+            value="${escapeHtml(item.name)}"
+            placeholder="Steel / Cement / Paint..."
+            oninput="updateItem(${index},'name',this.value)"
+          >
+        </div>
+
+        <div>
+          <label>Quantity</label>
+
+          <input
+            type="number"
+            min="0"
+            value="${item.qty}"
+            placeholder="0"
+            oninput="updateItem(${index},'qty',this.value)"
+          >
+        </div>
+
+        <div>
+          <label>Unit</label>
+
+          <select
+            onchange="updateItem(${index},'unit',this.value)"
+          >
+
+            <option ${item.unit==="Nos"?"selected":""}>
+              Nos
+            </option>
+
+            <option ${item.unit==="Kg"?"selected":""}>
+              Kg
+            </option>
+
+            <option ${item.unit==="Ton"?"selected":""}>
+              Ton
+            </option>
+
+            <option ${item.unit==="Bag"?"selected":""}>
+              Bag
+            </option>
+
+            <option ${item.unit==="Litre"?"selected":""}>
+              Litre
+            </option>
+
+            <option ${item.unit==="Piece"?"selected":""}>
+              Piece
+            </option>
+
+            <option ${item.unit==="Box"?"selected":""}>
+              Box
+            </option>
+
+          </select>
+
+        </div>
+
+        <div>
+          <label>Rate</label>
+
+          <input
+            type="number"
+            min="0"
+            value="${item.rate}"
+            placeholder="0"
+            oninput="updateItem(${index},'rate',this.value)"
+          >
+        </div>
+
+      </div>
+
+      <div class="amount-box">
+        Amount:
+        ₹${(
+          (Number(item.qty)||0) *
+          (Number(item.rate)||0)
+        ).toFixed(2)}
+      </div>
+
+      <button
+        class="remove-btn"
+        onclick="removeItem(${index})"
+      >
+        Remove Item
+      </button>
+
+    `;
+
+    container.appendChild(div);
+
+  });
+
+}
+
+
+/* =========================
+   UPDATE ITEM
+========================= */
+
+function updateItem(index,key,value){
+
+  items[index][key] = value;
+
+  renderItems();
+
+  calculateTotal();
+
+}
+
+
+/* =========================
+   REMOVE ITEM
+========================= */
+
+function removeItem(index){
+
+  if(items.length === 1){
+
+    alert("At least one item is required.");
+
+    return;
+  }
+
+  items.splice(index,1);
+
+  renderItems();
+
+  calculateTotal();
+
+}
+
+
+/* =========================
+   CALCULATE TOTAL
+========================= */
+
+function calculateTotal(){
+
+  let subTotal = 0;
+
+  items.forEach(item => {
+
+    const qty =
+      Number(item.qty) || 0;
+
+    const rate =
+      Number(item.rate) || 0;
+
+    subTotal += qty * rate;
+
+  });
+
+
+  let discount =
+    Number(
+      document.getElementById("discount").value
+    ) || 0;
+
+
+  if(discount > subTotal){
+
+    discount = subTotal;
+
+    document.getElementById("discount").value =
+      discount;
+
+  }
+
+
+  const grandTotal =
+    subTotal - discount;
+
+
+  document.getElementById("subTotal").textContent =
+    subTotal.toFixed(2);
+
+  document.getElementById("discountAmount").textContent =
+    discount.toFixed(2);
+
+  document.getElementById("grandTotal").textContent =
+    grandTotal.toFixed(2);
+
+}
+
+
+/* =========================
+   SAVE ESTIMATE
+========================= */
+
+function saveEstimate(){
+
+  const name =
+    document.getElementById("customerName").value.trim();
+
+  const mobile =
+    document.getElementById("customerMobile").value.trim();
+
+  const address =
+    document.getElementById("siteAddress").value.trim();
+
+  const date =
+    document.getElementById("estimateDate").value;
+
+  const discount =
+    Number(
+      document.getElementById("discount").value
+    ) || 0;
+
+  const notes =
+    document.getElementById("notes").value.trim();
+
+
+  const validItems =
+    items.filter(item =>
+      item.name.trim() &&
+      Number(item.qty) > 0 &&
+      Number(item.rate) >= 0
+    );
+
+
+  if(validItems.length === 0){
+
+    alert("Please add at least one item.");
+
+    return;
+  }
+
+
+  let estimates =
+    JSON.parse(
+      localStorage.getItem(STORAGE_KEY) || "[]"
+    );
+
+
+  let subtotal = 0;
+
+  validItems.forEach(item => {
+
+    subtotal +=
+      Number(item.qty) *
+      Number(item.rate);
+
+  });
+
+
+  const finalDiscount =
+    Math.min(discount,subtotal);
+
+
+  const estimate = {
+
+    id:
+      editingId || Date.now().toString(),
+
+    estimateNo:
+      document.getElementById("estimateNo").value,
+
+    date,
+
+    customerName:name,
+
+    customerMobile:mobile,
+
+    siteAddress:address,
+
+    items:validItems,
+
+    discount:finalDiscount,
+
+    subtotal,
+
+    grandTotal:
+      subtotal - finalDiscount,
+
+    notes
+
+  };
+
+
+  if(editingId){
+
+    estimates =
+      estimates.map(x =>
+        x.id === editingId
+          ? estimate
+          : x
+      );
+
+  }else{
+
+    estimates.unshift(estimate);
+
+  }
+
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(estimates)
+  );
+
+
+  alert(
+    editingId
+      ? "Estimate updated successfully."
+      : "Estimate saved successfully."
+  );
+
+
+  newEstimate();
+
+  renderSavedEstimates();
+
+}
+
+
+/* =========================
+   LOAD ESTIMATE
+========================= */
+
+function loadEstimate(id){
+
+  const estimates =
+    JSON.parse(
+      localStorage.getItem(STORAGE_KEY) || "[]"
+    );
+
+  const estimate =
+    estimates.find(x => x.id === id);
+
+  if(!estimate) return;
+
+
+  editingId = id;
+
+
+  document.getElementById("estimateNo").value =
+    estimate.estimateNo;
+
+  document.getElementById("estimateDate").value =
+    estimate.date;
+
+  document.getElementById("customerName").value =
+    estimate.customerName || "";
+
+  document.getElementById("customerMobile").value =
+    estimate.customerMobile || "";
+
+  document.getElementById("siteAddress").value =
+    estimate.siteAddress || "";
+
+  document.getElementById("discount").value =
+    estimate.discount || "";
+
+  document.getElementById("notes").value =
+    estimate.notes || "";
+
+
+  items =
+    estimate.items.map(x => ({
+      id:Date.now()+Math.random(),
+      name:x.name,
+      qty:x.qty,
+      unit:x.unit,
+      rate:x.rate
+    }));
+
+
+  renderItems();
+
+  calculateTotal();
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================
+   DELETE ESTIMATE
+========================= */
+
+function deleteEstimate(id){
+
+  if(!confirm(
+    "Delete this estimate?"
+  )) return;
+
+
+  let estimates =
+    JSON.parse(
+      localStorage.getItem(STORAGE_KEY) || "[]"
+    );
+
+
+  estimates =
+    estimates.filter(x => x.id !== id);
+
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(estimates)
+  );
+
+
+  renderSavedEstimates();
+
+}
+
+
+/* =========================
+   NEW ESTIMATE
+========================= */
+
+function newEstimate(){
+
+  editingId = null;
+
+  document.getElementById("estimateNo").value =
+    generateEstimateNumber();
+
+  document.getElementById("estimateDate").value =
+    new Date().toISOString().split("T")[0];
+
+  document.getElementById("customerName").value = "";
+
+  document.getElementById("customerMobile").value = "";
+
+  document.getElementById("siteAddress").value = "";
+
+  document.getElementById("discount").value = "";
+
+  document.getElementById("notes").value = "";
+
+  items = [];
+
+  addItem();
+
+  calculateTotal();
+
+}
+
+
+/* =========================
+   SAVED ESTIMATES
+========================= */
+
+function renderSavedEstimates(){
+
+  const container =
+    document.getElementById("savedList");
+
+  const estimates =
+    JSON.parse(
+      localStorage.getItem(STORAGE_KEY) || "[]"
+    );
+
+
+  if(estimates.length === 0){
+
+    container.innerHTML =
+      '<div class="empty">No saved estimates yet.</div>';
+
+    return;
+  }
+
+
+  container.innerHTML = "";
+
+
+  estimates.forEach(estimate => {
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "saved-estimate";
+
+
+    div.innerHTML = `
+
+      <div>
+
+        <strong>
+          ${escapeHtml(estimate.estimateNo)}
+        </strong>
+
+        <br>
+
+        ${escapeHtml(
+          estimate.customerName ||
+          "Customer not entered"
+        )}
+
+        <br>
+
+        <small>
+          ${escapeHtml(estimate.date)}
+          |
+          ₹${Number(
+            estimate.grandTotal || 0
+          ).toFixed(2)}
+        </small>
+
+      </div>
+
+      <div class="small-buttons">
+
+        <button
+          class="add-btn"
+          onclick="loadEstimate('${estimate.id}')"
+        >
+          Edit
+        </button>
+
+        <button
+          class="remove-btn"
+          onclick="deleteEstimate('${estimate.id}')"
+        >
+          Delete
+        </button>
+
+      </div>
+
+    `;
+
+
+    container.appendChild(div);
+
+  });
+
+}
+
+
+/* =========================
+   HTML ESCAPE
+========================= */
+
+function escapeHtml(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+</script>
+
+</body>
+</html>
