@@ -2,19 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Saravana Steel Company - Estimate</title>
 
 <style>
-
 *{
   box-sizing:border-box;
 }
 
 body{
   margin:0;
-  font-family:Arial,sans-serif;
+  font-family:Arial, sans-serif;
   background:#f4f6f9;
   color:#222;
 }
@@ -22,52 +21,49 @@ body{
 header{
   background:#0b1730;
   color:white;
-  padding:16px;
+  padding:18px 15px;
   text-align:center;
 }
 
 header h1{
   margin:0;
-  font-size:21px;
+  font-size:23px;
 }
 
 header p{
-  margin:5px 0 0;
-  font-size:12px;
+  margin:6px 0 0;
+  font-size:13px;
   line-height:1.5;
 }
 
-.nav{
+nav{
   display:flex;
   background:white;
   border-bottom:1px solid #ddd;
   position:sticky;
   top:0;
-  z-index:10;
+  z-index:20;
 }
 
-.nav button{
+nav button{
   flex:1;
   border:0;
   background:white;
-  padding:13px 5px;
+  padding:14px 5px;
+  font-size:14px;
   font-weight:bold;
-  font-size:13px;
 }
 
-.nav button.active{
+nav button.active{
   color:#0b1730;
   border-bottom:3px solid #0b1730;
 }
 
-.container{
-  max-width:850px;
-  margin:auto;
-  padding:14px;
-}
-
 .page{
   display:none;
+  padding:14px;
+  max-width:800px;
+  margin:auto;
 }
 
 .page.active{
@@ -78,27 +74,37 @@ header p{
   background:white;
   border-radius:12px;
   padding:15px;
-  margin-bottom:13px;
-  box-shadow:0 2px 7px rgba(0,0,0,.07);
+  margin-bottom:14px;
+  box-shadow:0 2px 8px rgba(0,0,0,.07);
 }
 
 h2{
-  font-size:18px;
   margin:0 0 12px;
+  font-size:19px;
+}
+
+h3{
+  margin:0 0 10px;
+  font-size:16px;
 }
 
 label{
   display:block;
   font-size:13px;
   font-weight:bold;
-  margin:9px 0 5px;
+  margin:10px 0 5px;
 }
 
 input,
 select,
-textarea{
+button{
+  font-family:inherit;
+}
+
+input,
+select{
   width:100%;
-  padding:11px;
+  padding:12px;
   border:1px solid #ccc;
   border-radius:8px;
   font-size:15px;
@@ -106,294 +112,300 @@ textarea{
 }
 
 button{
-  border:0;
-  border-radius:8px;
-  padding:10px 13px;
-  font-weight:bold;
   cursor:pointer;
 }
 
 .primary{
+  width:100%;
   background:#0b1730;
   color:white;
+  border:0;
+  border-radius:8px;
+  padding:13px;
+  font-size:15px;
+  font-weight:bold;
 }
 
-.success{
-  background:#16803c;
-  color:white;
+.secondary{
+  background:#eee;
+  color:#222;
+  border:0;
+  border-radius:8px;
+  padding:11px 14px;
+  font-weight:bold;
 }
 
 .danger{
-  background:#d93025;
+  background:#dc3545;
   color:white;
+  border:0;
+  border-radius:7px;
+  padding:8px 12px;
 }
 
-.gray{
-  background:#777;
+.smallBtn{
+  background:#0b1730;
   color:white;
-}
-
-.search{
-  margin-bottom:10px;
-}
-
-.product-search{
-  position:relative;
-}
-
-.product-results{
-  border:1px solid #ddd;
-  border-radius:8px;
-  margin-top:5px;
-  background:white;
-  max-height:220px;
-  overflow:auto;
-}
-
-.product-option{
-  padding:12px;
-  border-bottom:1px solid #eee;
-  cursor:pointer;
-}
-
-.product-option:last-child{
-  border-bottom:0;
-}
-
-.product-option:hover{
-  background:#f1f3f5;
-}
-
-.selected-product{
-  background:#eef3ff;
-  border:1px solid #ccd8ff;
-  padding:11px;
-  border-radius:8px;
-  margin-top:8px;
-  font-weight:bold;
+  border:0;
+  border-radius:7px;
+  padding:9px 12px;
 }
 
 .row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
+  display:flex;
   gap:10px;
 }
 
-.bill-item{
-  border:1px solid #ddd;
-  border-radius:10px;
-  padding:12px;
-  margin-bottom:10px;
-  background:#fafafa;
+.row > div{
+  flex:1;
 }
 
-.bill-item-title{
-  font-weight:bold;
-  font-size:15px;
-  margin-bottom:8px;
-}
-
-.item-line{
+.estimateTop{
   display:flex;
-  justify-content:space-between;
+  gap:10px;
+}
+
+.estimateTop > div{
+  flex:1;
+}
+
+.productSearchWrap{
+  position:relative;
+}
+
+.productResults{
+  position:absolute;
+  left:0;
+  right:0;
+  top:100%;
+  background:white;
+  border:1px solid #ccc;
+  border-radius:8px;
+  margin-top:3px;
+  z-index:30;
+  max-height:220px;
+  overflow:auto;
+  box-shadow:0 4px 12px rgba(0,0,0,.12);
+}
+
+.productResult{
+  padding:12px;
+  border-bottom:1px solid #eee;
+}
+
+.productResult:last-child{
+  border-bottom:0;
+}
+
+.productResult strong{
+  display:block;
+}
+
+.productResult span{
+  font-size:12px;
+  color:#666;
+}
+
+.selectedProduct{
   margin-top:8px;
+  padding:10px;
+  background:#eef3ff;
+  border-radius:8px;
   font-size:14px;
 }
 
-.item-amount{
-  font-weight:bold;
-}
-
-.remove-small{
-  background:#d93025;
-  color:white;
-  padding:7px 10px;
-  margin-top:8px;
-}
-
-.total{
-  text-align:right;
-  font-size:15px;
-  line-height:1.9;
-}
-
-.grand{
-  font-size:23px;
-  font-weight:bold;
-  border-top:1px solid #ddd;
-  padding-top:8px;
-}
-
-.big-button{
-  width:100%;
-  padding:14px;
-  font-size:16px;
-}
-
-.product-card{
-  border:1px solid #ddd;
-  border-radius:9px;
+.addBox{
+  background:#f8f9fb;
   padding:12px;
-  margin-bottom:8px;
+  border-radius:10px;
+  margin-top:12px;
+}
+
+.amountPreview{
+  margin-top:10px;
+  text-align:right;
+  font-size:17px;
+  font-weight:bold;
+}
+
+.itemCard{
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:12px;
+  margin-top:10px;
+  background:white;
+}
+
+.itemHead{
   display:flex;
   justify-content:space-between;
-  align-items:center;
   gap:10px;
 }
 
-.product-actions{
+.itemName{
+  font-weight:bold;
+  font-size:15px;
+}
+
+.itemAmount{
+  font-weight:bold;
+  font-size:16px;
+  white-space:nowrap;
+}
+
+.itemInfo{
+  margin-top:6px;
+  color:#666;
+  font-size:13px;
+}
+
+.itemActions{
+  margin-top:9px;
+  text-align:right;
+}
+
+.summary{
+  margin-top:15px;
+  border-top:1px solid #ddd;
+  padding-top:12px;
+}
+
+.summaryLine{
   display:flex;
-  gap:5px;
+  justify-content:space-between;
+  margin:8px 0;
+  font-size:15px;
 }
 
-.product-actions button{
-  padding:7px 9px;
+.grand{
+  font-size:20px;
+  font-weight:bold;
+  padding-top:8px;
+  border-top:2px solid #222;
 }
 
-.estimate-card{
+.productListItem,
+.estimateListItem{
+  background:white;
   border:1px solid #ddd;
-  border-radius:9px;
+  border-radius:10px;
   padding:12px;
-  margin-bottom:9px;
+  margin-top:10px;
 }
 
-.estimate-actions{
+.listTop{
   display:flex;
-  gap:6px;
-  margin-top:8px;
+  justify-content:space-between;
+  gap:10px;
 }
 
-.estimate-actions button{
+.listName{
+  font-weight:bold;
+}
+
+.unitBadge{
+  background:#eef3ff;
+  padding:4px 8px;
+  border-radius:20px;
+  font-size:12px;
+}
+
+.actions{
+  margin-top:10px;
+  display:flex;
+  gap:8px;
+}
+
+.actions button{
   flex:1;
 }
 
 .empty{
   text-align:center;
   color:#777;
-  padding:18px;
+  padding:20px 5px;
 }
 
-.estimate-heading{
-  text-align:center;
-  font-size:21px;
-  font-weight:bold;
-  text-decoration:underline;
-  margin-bottom:12px;
+.searchBox{
+  margin-bottom:10px;
 }
 
-.small{
-  font-size:12px;
+.note{
   color:#666;
+  font-size:12px;
+  margin-top:7px;
 }
 
-@media(max-width:600px){
+.hidden{
+  display:none !important;
+}
 
-  .row{
-    grid-template-columns:1fr;
-  }
+@media(max-width:500px){
 
-  .product-card{
-    align-items:flex-start;
+  .estimateTop{
     flex-direction:column;
   }
 
-  .product-actions{
-    width:100%;
+  .row{
+    gap:7px;
   }
 
-  .product-actions button{
-    flex:1;
+  .row input,
+  .row select{
+    padding:11px 9px;
   }
 
+  .itemHead{
+    align-items:flex-start;
+  }
 }
-
 </style>
 </head>
 
 <body>
 
 <header>
-
   <h1>Saravana Steel Company</h1>
-
   <p>
     No.7, New Goller Street,<br>
     (Opp to Bus Stand) Alangayam - 635701<br>
     📞 9943706320 / 7010795644
   </p>
-
 </header>
 
-
-<!-- NAVIGATION -->
-
-<div class="nav">
-
-  <button
-    id="navHome"
-    class="active"
-    onclick="showPage('home')"
-  >
-    🏠 Home
+<nav>
+  <button id="navHome" class="active" onclick="showPage('home')">
+    🧾 Home
   </button>
 
-  <button
-    id="navProducts"
-    onclick="showPage('products')"
-  >
+  <button id="navProducts" onclick="showPage('products')">
     📦 Products
   </button>
 
-  <button
-    id="navEstimates"
-    onclick="showPage('estimates')"
-  >
-    🧾 Estimates
+  <button id="navEstimates" onclick="showPage('estimates')">
+    📋 Estimates
   </button>
-
-</div>
-
-
-<div class="container">
+</nav>
 
 
-<!-- ==================================================
-     HOME
-================================================== -->
+<!-- ================= HOME ================= -->
 
-<div id="home" class="page active">
-
-
-  <!-- ESTIMATE HEADER -->
+<section id="home" class="page active">
 
   <div class="card">
 
-    <div class="estimate-heading">
-      ESTIMATE
-    </div>
+    <h2><u>ESTIMATE</u></h2>
 
-    <div class="row">
+    <div class="estimateTop">
 
       <div>
-
-        <label>Estimate Number</label>
-
-        <input
-          id="estimateNo"
-          readonly
-        >
-
+        <label>Estimate No.</label>
+        <input id="estimateNo" readonly>
       </div>
 
       <div>
-
         <label>Date</label>
-
-        <input
-          id="estimateDate"
-          type="date"
-        >
-
+        <input type="date" id="estimateDate">
       </div>
 
     </div>
@@ -401,179 +413,85 @@ button{
   </div>
 
 
-  <!-- CUSTOMER -->
+  <!-- ADD PRODUCT -->
 
   <div class="card">
 
-    <h2>Customer (Optional)</h2>
+    <h3>➕ Add Product</h3>
 
-    <div class="row">
+    <div class="addBox">
 
-      <div>
+      <label>Search Product</label>
 
-        <label>Name</label>
+      <div class="productSearchWrap">
 
         <input
-          id="customerName"
-          placeholder="Customer name"
+          id="productSearch"
+          placeholder="Search product..."
+          autocomplete="off"
+          oninput="searchProducts()"
+          onclick="searchProducts()"
         >
+
+        <div
+          id="productResults"
+          class="productResults hidden">
+        </div>
 
       </div>
 
-      <div>
+      <div id="selectedProductBox"
+           class="selectedProduct hidden">
+      </div>
 
-        <label>Mobile</label>
 
-        <input
-          id="customerMobile"
-          type="tel"
-          placeholder="Mobile number"
-        >
+      <div class="row">
+
+        <div>
+          <label>Unit</label>
+          <input id="itemUnit" readonly placeholder="-">
+        </div>
+
+        <div>
+          <label>Quantity</label>
+          <input
+            id="itemQty"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="0">
+        </div>
 
       </div>
 
-    </div>
 
-    <label>Site Address</label>
-
-    <input
-      id="siteAddress"
-      placeholder="Site address"
-    >
-
-  </div>
-
-
-  <!-- PRODUCT SELECT -->
-
-  <div class="card">
-
-    <h2>Add Product</h2>
-
-    <label>Search Product</label>
-
-    <div class="product-search">
+      <label>Price</label>
 
       <input
-        id="productSearch"
-        class="search"
-        placeholder="Search saved product..."
-        oninput="searchProductsForBill()"
-      >
-
-      <div
-        id="productResults"
-        class="product-results"
-      ></div>
-
-    </div>
+        id="itemPrice"
+        type="number"
+        min="0"
+        step="0.01"
+        placeholder="Enter selling price">
 
 
-    <div
-      id="selectedProduct"
-      class="selected-product"
-      style="display:none"
-    ></div>
-
-
-    <div class="row">
-
-      <div>
-
-        <label>Quantity</label>
-
-        <input
-          id="billQty"
-          type="number"
-          min="0"
-          placeholder="0"
-          oninput="calculateCurrentAmount()"
-        >
-
+      <div class="amountPreview">
+        Amount: ₹<span id="liveAmount">0.00</span>
       </div>
 
-      <div>
 
-        <label>Price</label>
+      <button
+        class="primary"
+        style="margin-top:12px"
+        onclick="addItem()">
 
-        <input
-          id="billPrice"
-          type="number"
-          min="0"
-          placeholder="0"
-          oninput="calculateCurrentAmount()"
-        >
+        + Add Item
 
-      </div>
+      </button>
 
-    </div>
-
-
-    <div
-      id="currentAmount"
-      style="
-        text-align:right;
-        margin-top:10px;
-        font-weight:bold;
-      "
-    >
-      Amount: ₹0.00
-    </div>
-
-
-    <button
-      class="primary big-button"
-      style="margin-top:12px"
-      onclick="addBillItem()"
-    >
-      + Add Product to Estimate
-    </button>
-
-  </div>
-
-
-  <!-- BILL ITEMS -->
-
-  <div class="card">
-
-    <h2>Estimate Items</h2>
-
-    <div id="billItems"></div>
-
-  </div>
-
-
-  <!-- TOTAL -->
-
-  <div class="card">
-
-    <h2>Bill Summary</h2>
-
-    <label>Discount (Optional)</label>
-
-    <input
-      id="discount"
-      type="number"
-      min="0"
-      placeholder="0"
-      oninput="calculateTotal()"
-    >
-
-    <div class="total">
-
-      <div>
-        Sub Total:
-        ₹<span id="subTotal">0.00</span>
-      </div>
-
-      <div>
-        Discount:
-        ₹<span id="discountAmount">0.00</span>
-      </div>
-
-      <div class="grand">
-        Grand Total:
-        ₹<span id="grandTotal">0.00</span>
+      <div class="note">
+        Product select → Quantity → Price → Add Item.
+        After adding, you can immediately add the next product.
       </div>
 
     </div>
@@ -581,16 +499,51 @@ button{
   </div>
 
 
-  <!-- NOTES -->
+  <!-- ITEMS -->
 
   <div class="card">
 
-    <label>Notes (Optional)</label>
+    <h3>🛒 Added Items</h3>
 
-    <textarea
-      id="notes"
-      placeholder="Notes / terms and conditions"
-    ></textarea>
+    <div id="itemsList">
+      <div class="empty">
+        No products added yet
+      </div>
+    </div>
+
+
+    <div class="summary">
+
+      <div class="summaryLine">
+        <span>Subtotal</span>
+        <strong>₹<span id="subtotal">0.00</span></strong>
+      </div>
+
+
+      <label>Discount (Optional)</label>
+
+      <input
+        id="discount"
+        type="number"
+        min="0"
+        step="0.01"
+        value="0"
+        placeholder="0"
+        oninput="calculateTotal()">
+
+
+      <div class="summaryLine">
+        <span>Discount</span>
+        <strong>₹<span id="discountDisplay">0.00</span></strong>
+      </div>
+
+
+      <div class="summaryLine grand">
+        <span>Grand Total</span>
+        <span>₹<span id="grandTotal">0.00</span></span>
+      </div>
+
+    </div>
 
   </div>
 
@@ -600,30 +553,30 @@ button{
   <div class="card">
 
     <button
-      class="success big-button"
-      onclick="saveEstimate()"
-    >
+      class="primary"
+      onclick="saveEstimate()">
+
       💾 Save Estimate
+
     </button>
 
     <button
-      class="gray big-button"
-      style="margin-top:8px"
-      onclick="newEstimate()"
-    >
-      🆕 New Estimate
+      class="secondary"
+      style="width:100%;margin-top:10px"
+      onclick="newEstimate()">
+
+      + New Estimate
+
     </button>
 
   </div>
 
-</div>
+</section>
 
 
-<!-- ==================================================
-     PRODUCTS
-================================================== -->
+<!-- ================= PRODUCTS ================= -->
 
-<div id="products" class="page">
+<section id="products" class="page">
 
   <div class="card">
 
@@ -633,15 +586,34 @@ button{
 
     <input
       id="newProductName"
-      placeholder="Example: TMT 10mm"
-    >
+      placeholder="Example: TMT 10mm">
+
+
+    <label>Unit</label>
+
+    <select id="newProductUnit">
+
+      <option value="">Select Unit</option>
+
+      <option value="Nos">Nos</option>
+      <option value="Kg">Kg</option>
+      <option value="Ton">Ton</option>
+      <option value="Bag">Bag</option>
+      <option value="Litre">Litre</option>
+      <option value="Piece">Piece</option>
+      <option value="Box">Box</option>
+      <option value="Meter">Meter</option>
+
+    </select>
+
 
     <button
-      class="primary big-button"
-      style="margin-top:10px"
-      onclick="saveProduct()"
-    >
-      + Save Product
+      class="primary"
+      style="margin-top:12px"
+      onclick="saveProduct()">
+
+      💾 Save Product
+
     </button>
 
   </div>
@@ -649,115 +621,171 @@ button{
 
   <div class="card">
 
-    <h2>Saved Products</h2>
-
     <input
+      class="searchBox"
       id="productListSearch"
-      placeholder="🔍 Search products..."
-      oninput="renderProducts()"
-    >
+      placeholder="🔎 Search saved products..."
+      oninput="renderProducts()">
 
-    <div
-      id="productList"
-      style="margin-top:10px"
-    ></div>
+    <div id="productsList"></div>
 
   </div>
 
-</div>
+</section>
 
 
-<!-- ==================================================
-     ESTIMATES
-================================================== -->
+<!-- ================= ESTIMATES ================= -->
 
-<div id="estimates" class="page">
+<section id="estimates" class="page">
 
   <div class="card">
 
-    <h2>🧾 Saved Estimates</h2>
+    <h2>📋 Saved Estimates</h2>
 
     <input
       id="estimateSearch"
-      placeholder="🔍 Search estimate..."
-      oninput="renderEstimates()"
-    >
+      placeholder="🔎 Search estimate number..."
+      oninput="renderEstimates()">
 
-    <div
-      id="estimateList"
-      style="margin-top:10px"
-    ></div>
+    <div id="estimatesList"></div>
 
   </div>
 
-</div>
-
-
-</div>
+</section>
 
 
 <script>
 
-/* ==================================================
-   STORAGE
-================================================== */
+const PRODUCT_KEY = "saravana_products_v2";
+const OLD_PRODUCT_KEY = "saravana_products_v1";
 
-const PRODUCT_KEY =
-  "saravana_products_v1";
+const ESTIMATE_KEY = "saravana_estimates_v3";
 
-const ESTIMATE_KEY =
-  "saravana_estimates_v2";
-
-
-let products =
-  JSON.parse(
-    localStorage.getItem(PRODUCT_KEY) || "[]"
-  );
-
-
-let estimates =
-  JSON.parse(
-    localStorage.getItem(ESTIMATE_KEY) || "[]"
-  );
-
-
-let billItems = [];
+let products = [];
+let estimates = [];
 
 let selectedProduct = null;
-
 let editingEstimateId = null;
 
+let currentItems = [];
 
-/* ==================================================
-   START
-================================================== */
 
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
+/* =========================
+   LOAD DATA
+========================= */
 
-    newEstimate();
+function loadData(){
 
-    renderProducts();
+  let savedProducts =
+    localStorage.getItem(PRODUCT_KEY);
 
-    renderEstimates();
+  if(savedProducts){
+
+    try{
+      products = JSON.parse(savedProducts);
+    }catch(e){
+      products = [];
+    }
+
+  }else{
+
+    /* Migrate old product list */
+
+    let old =
+      localStorage.getItem(OLD_PRODUCT_KEY);
+
+    if(old){
+
+      try{
+
+        const oldProducts = JSON.parse(old);
+
+        products = oldProducts.map((p,index)=>{
+
+          if(typeof p === "string"){
+
+            return {
+              id:"p_"+Date.now()+"_"+index,
+              name:p,
+              unit:"Nos"
+            };
+
+          }
+
+          return {
+            id:p.id || ("p_"+Date.now()+"_"+index),
+            name:p.name || "",
+            unit:p.unit || "Nos"
+          };
+
+        });
+
+        saveProducts();
+
+      }catch(e){
+
+        products = [];
+
+      }
+
+    }
 
   }
-);
 
 
-/* ==================================================
+  try{
+
+    estimates =
+      JSON.parse(
+        localStorage.getItem(ESTIMATE_KEY) || "[]"
+      );
+
+  }catch(e){
+
+    estimates = [];
+
+  }
+
+}
+
+
+/* =========================
+   SAVE PRODUCTS
+========================= */
+
+function saveProducts(){
+
+  localStorage.setItem(
+    PRODUCT_KEY,
+    JSON.stringify(products)
+  );
+
+}
+
+
+/* =========================
+   SAVE ESTIMATES DATA
+========================= */
+
+function saveEstimates(){
+
+  localStorage.setItem(
+    ESTIMATE_KEY,
+    JSON.stringify(estimates)
+  );
+
+}
+
+
+/* =========================
    PAGE NAVIGATION
-================================================== */
+========================= */
 
 function showPage(page){
 
   document
     .querySelectorAll(".page")
-    .forEach(x =>
-      x.classList.remove("active")
-    );
-
+    .forEach(p => p.classList.remove("active"));
 
   document
     .getElementById(page)
@@ -765,976 +793,1088 @@ function showPage(page){
 
 
   document
-    .querySelectorAll(".nav button")
-    .forEach(x =>
-      x.classList.remove("active")
-    );
+    .querySelectorAll("nav button")
+    .forEach(b => b.classList.remove("active"));
 
 
-  if(page === "home")
-    document
-      .getElementById("navHome")
-      .classList.add("active");
+  if(page === "home"){
+    navHome.classList.add("active");
+  }
 
+  if(page === "products"){
+    navProducts.classList.add("active");
+    renderProducts();
+  }
 
-  if(page === "products")
-    document
-      .getElementById("navProducts")
-      .classList.add("active");
-
-
-  if(page === "estimates")
-    document
-      .getElementById("navEstimates")
-      .classList.add("active");
+  if(page === "estimates"){
+    navEstimates.classList.add("active");
+    renderEstimates();
+  }
 
 }
 
 
-/* ==================================================
+/* =========================
    ESTIMATE NUMBER
-================================================== */
+========================= */
 
-function generateEstimateNumber(){
+function getNextEstimateNumber(){
 
-  const year =
-    new Date().getFullYear();
+  if(!estimates.length){
+    return "EST-001";
+  }
 
 
   let max = 0;
 
-
-  estimates.forEach(x => {
+  estimates.forEach(e=>{
 
     const match =
-      String(x.estimateNo || "")
-        .match(/(\d+)$/);
-
+      String(e.number || "")
+      .match(/(\d+)$/);
 
     if(match){
 
-      max =
-        Math.max(
-          max,
-          Number(match[1])
-        );
+      const n =
+        parseInt(match[1]);
+
+      if(n > max){
+        max = n;
+      }
 
     }
 
   });
 
 
-  return (
-    "EST-" +
-    year +
-    "-" +
-    String(max + 1).padStart(4,"0")
-  );
+  return "EST-" +
+    String(max + 1).padStart(3,"0");
 
 }
 
 
-/* ==================================================
+/* =========================
+   DATE
+========================= */
+
+function todayDate(){
+
+  const d = new Date();
+
+  const y = d.getFullYear();
+
+  const m =
+    String(d.getMonth()+1)
+    .padStart(2,"0");
+
+  const day =
+    String(d.getDate())
+    .padStart(2,"0");
+
+  return `${y}-${m}-${day}`;
+
+}
+
+
+/* =========================
+   NEW ESTIMATE
+========================= */
+
+function newEstimate(){
+
+  editingEstimateId = null;
+
+  currentItems = [];
+
+  selectedProduct = null;
+
+  estimateNo.value =
+    getNextEstimateNumber();
+
+  estimateDate.value =
+    todayDate();
+
+  productSearch.value = "";
+
+  itemUnit.value = "";
+
+  itemQty.value = "";
+
+  itemPrice.value = "";
+
+  discount.value = "0";
+
+  selectedProductBox.classList.add("hidden");
+
+  productResults.classList.add("hidden");
+
+  renderItems();
+
+}
+
+
+/* =========================
    PRODUCT SAVE
-================================================== */
+========================= */
 
 function saveProduct(){
 
-  const input =
-    document.getElementById(
-      "newProductName"
-    );
-
-
   const name =
-    input.value.trim();
+    newProductName.value.trim();
+
+  const unit =
+    newProductUnit.value;
 
 
   if(!name){
 
-    alert("Please enter product name.");
+    alert("Please enter Product Name");
+
+    newProductName.focus();
 
     return;
+
+  }
+
+
+  if(!unit){
+
+    alert("Please select Unit");
+
+    newProductUnit.focus();
+
+    return;
+
   }
 
 
   const exists =
     products.some(
-      x =>
-        x.toLowerCase() ===
+      p =>
+        p.name.toLowerCase() ===
         name.toLowerCase()
     );
 
 
   if(exists){
 
-    alert("Product already exists.");
+    alert("This product already exists");
 
     return;
+
   }
 
 
-  products.push(name);
+  products.push({
+
+    id:
+      "p_" +
+      Date.now(),
+
+    name:name,
+
+    unit:unit
+
+  });
 
 
-  products.sort(
-    (a,b) =>
-      a.localeCompare(b)
-  );
+  saveProducts();
 
 
-  localStorage.setItem(
-    PRODUCT_KEY,
-    JSON.stringify(products)
-  );
+  newProductName.value = "";
 
-
-  input.value = "";
+  newProductUnit.value = "";
 
 
   renderProducts();
 
 
-  alert("Product saved successfully.");
+  alert("Product saved successfully");
 
 }
 
 
-/* ==================================================
-   RENDER PRODUCTS
-================================================== */
+/* =========================
+   PRODUCT SEARCH
+========================= */
 
-function renderProducts(){
+function searchProducts(){
 
-  const container =
-    document.getElementById(
-      "productList"
-    );
-
-
-  const search =
-    (
-      document.getElementById(
-        "productListSearch"
-      )?.value || ""
-    )
-    .toLowerCase()
-    .trim();
+  const text =
+    productSearch.value
+    .trim()
+    .toLowerCase();
 
 
-  const filtered =
-    products.filter(
-      x =>
-        x.toLowerCase()
-         .includes(search)
-    );
+  if(!text){
 
+    productResults.innerHTML =
+      products.length
+      ? products.slice(0,20).map(productResultHTML).join("")
+      : `<div class="empty">No products saved</div>`;
 
-  if(filtered.length === 0){
-
-    container.innerHTML =
-      '<div class="empty">No products found.</div>';
+    productResults.classList.remove("hidden");
 
     return;
+
   }
 
 
-  container.innerHTML = "";
-
-
-  filtered.forEach(
-    product => {
-
-      const div =
-        document.createElement("div");
-
-
-      div.className =
-        "product-card";
-
-
-      div.innerHTML = `
-
-        <div>
-          <strong>
-            ${escapeHtml(product)}
-          </strong>
-        </div>
-
-        <div class="product-actions">
-
-          <button
-            class="primary"
-            onclick="renameProduct('${escapeJs(product)}')"
-          >
-            Edit
-          </button>
-
-          <button
-            class="danger"
-            onclick="deleteProduct('${escapeJs(product)}')"
-          >
-            Delete
-          </button>
-
-        </div>
-
-      `;
-
-
-      container.appendChild(div);
-
-    }
-  );
-
-}
-
-
-/* ==================================================
-   RENAME PRODUCT
-================================================== */
-
-function renameProduct(oldName){
-
-  const newName =
-    prompt(
-      "Enter new product name:",
-      oldName
-    );
-
-
-  if(newName === null)
-    return;
-
-
-  const clean =
-    newName.trim();
-
-
-  if(!clean)
-    return;
-
-
-  const exists =
-    products.some(
-      x =>
-        x !== oldName &&
-        x.toLowerCase() ===
-        clean.toLowerCase()
-    );
-
-
-  if(exists){
-
-    alert("Product already exists.");
-
-    return;
-  }
-
-
-  products =
-    products.map(
-      x =>
-        x === oldName
-          ? clean
-          : x
-    );
-
-
-  products.sort(
-    (a,b) =>
-      a.localeCompare(b)
-  );
-
-
-  localStorage.setItem(
-    PRODUCT_KEY,
-    JSON.stringify(products)
-  );
-
-
-  renderProducts();
-
-}
-
-
-/* ==================================================
-   DELETE PRODUCT
-================================================== */
-
-function deleteProduct(name){
-
-  if(!confirm(
-    "Delete " + name + "?"
-  ))
-    return;
-
-
-  products =
-    products.filter(
-      x => x !== name
-    );
-
-
-  localStorage.setItem(
-    PRODUCT_KEY,
-    JSON.stringify(products)
-  );
-
-
-  renderProducts();
-
-}
-
-
-/* ==================================================
-   SEARCH PRODUCT FOR BILL
-================================================== */
-
-function searchProductsForBill(){
-
-  const search =
-    document
-      .getElementById(
-        "productSearch"
-      )
-      .value
+  const matches =
+    products.filter(p =>
+      p.name
       .toLowerCase()
-      .trim();
-
-
-  const results =
-    document.getElementById(
-      "productResults"
+      .includes(text)
     );
 
 
-  if(!search){
+  if(!matches.length){
 
-    results.innerHTML = "";
+    productResults.innerHTML =
+      `<div class="empty">No product found</div>`;
 
-    return;
+  }else{
+
+    productResults.innerHTML =
+      matches
+      .slice(0,30)
+      .map(productResultHTML)
+      .join("");
+
   }
 
 
-  const filtered =
-    products.filter(
-      x =>
-        x.toLowerCase()
-         .includes(search)
-    );
-
-
-  if(filtered.length === 0){
-
-    results.innerHTML =
-      '<div class="product-option">No product found. Add it from Products.</div>';
-
-    return;
-  }
-
-
-  results.innerHTML = "";
-
-
-  filtered.forEach(
-    product => {
-
-      const div =
-        document.createElement("div");
-
-
-      div.className =
-        "product-option";
-
-
-      div.textContent =
-        product;
-
-
-      div.onclick =
-        () =>
-          selectProduct(product);
-
-
-      results.appendChild(div);
-
-    }
-  );
+  productResults.classList.remove("hidden");
 
 }
 
 
-/* ==================================================
+function productResultHTML(p){
+
+  return `
+    <div
+      class="productResult"
+      onclick="selectProduct('${p.id}')">
+
+      <strong>${escapeHTML(p.name)}</strong>
+
+      <span>Unit: ${escapeHTML(p.unit)}</span>
+
+    </div>
+  `;
+
+}
+
+
+/* =========================
    SELECT PRODUCT
-================================================== */
+========================= */
 
-function selectProduct(product){
+function selectProduct(id){
 
-  selectedProduct =
-    product;
-
-
-  document
-    .getElementById(
-      "selectedProduct"
-    )
-    .style.display =
-      "block";
+  const p =
+    products.find(x => x.id === id);
 
 
-  document
-    .getElementById(
-      "selectedProduct"
-    )
-    .textContent =
-      "Selected: " + product;
+  if(!p) return;
 
 
-  document
-    .getElementById(
-      "productSearch"
-    )
-    .value =
-      product;
+  selectedProduct = p;
 
 
-  document
-    .getElementById(
-      "productResults"
-    )
-    .innerHTML = "";
+  productSearch.value =
+    p.name;
+
+  itemUnit.value =
+    p.unit;
 
 
-  document
-    .getElementById(
-      "billQty"
-    )
-    .focus();
+  selectedProductBox.innerHTML =
+    `Selected: <strong>${escapeHTML(p.name)}</strong>`;
+
+  selectedProductBox.classList.remove("hidden");
+
+
+  productResults.classList.add("hidden");
+
+
+  itemQty.focus();
+
+
+  calculateLiveAmount();
 
 }
 
 
-/* ==================================================
-   CURRENT AMOUNT
-================================================== */
+/* =========================
+   LIVE AMOUNT
+========================= */
 
-function calculateCurrentAmount(){
+function calculateLiveAmount(){
 
   const qty =
-    Number(
-      document.getElementById(
-        "billQty"
-      ).value
-    ) || 0;
-
+    parseFloat(itemQty.value) || 0;
 
   const price =
-    Number(
-      document.getElementById(
-        "billPrice"
-      ).value
-    ) || 0;
+    parseFloat(itemPrice.value) || 0;
+
+  const amount =
+    qty * price;
+
+
+  liveAmount.textContent =
+    amount.toFixed(2);
+
+}
+
+
+/* =========================
+   ADD ITEM
+========================= */
+
+function addItem(){
+
+  if(!selectedProduct){
+
+    alert("Please select a product");
+
+    productSearch.focus();
+
+    return;
+
+  }
+
+
+  const qty =
+    parseFloat(itemQty.value);
+
+  const price =
+    parseFloat(itemPrice.value);
+
+
+  if(!qty || qty <= 0){
+
+    alert("Please enter Quantity");
+
+    itemQty.focus();
+
+    return;
+
+  }
+
+
+  if(
+    isNaN(price) ||
+    price < 0
+  ){
+
+    alert("Please enter Price");
+
+    itemPrice.focus();
+
+    return;
+
+  }
 
 
   const amount =
     qty * price;
 
 
-  document
-    .getElementById(
-      "currentAmount"
-    )
-    .textContent =
-      "Amount: ₹" +
-      amount.toFixed(2);
+  currentItems.push({
 
-}
+    productId:
+      selectedProduct.id,
 
+    product:
+      selectedProduct.name,
 
-/* ==================================================
-   ADD BILL ITEM
-================================================== */
+    unit:
+      selectedProduct.unit,
 
-function addBillItem(){
+    qty:qty,
 
-  if(!selectedProduct){
+    price:price,
 
-    alert("Please select a product.");
-
-    return;
-  }
-
-
-  const qty =
-    Number(
-      document.getElementById(
-        "billQty"
-      ).value
-    ) || 0;
-
-
-  const price =
-    Number(
-      document.getElementById(
-        "billPrice"
-      ).value
-    ) || 0;
-
-
-  if(qty <= 0){
-
-    alert("Please enter quantity.");
-
-    return;
-  }
-
-
-  if(price < 0){
-
-    alert("Please enter a valid price.");
-
-    return;
-  }
-
-
-  billItems.push({
-
-    product:selectedProduct,
-
-    qty,
-
-    price,
-
-    amount:
-      qty * price
+    amount:amount
 
   });
 
 
-  renderBillItems();
+  renderItems();
 
+
+  /* Reset for next product */
 
   selectedProduct = null;
 
+  productSearch.value = "";
 
-  document
-    .getElementById(
-      "productSearch"
-    )
-    .value = "";
+  itemUnit.value = "";
 
+  itemQty.value = "";
 
-  document
-    .getElementById(
-      "billQty"
-    )
-    .value = "";
+  itemPrice.value = "";
+
+  liveAmount.textContent = "0.00";
+
+  selectedProductBox.classList.add("hidden");
 
 
-  document
-    .getElementById(
-      "billPrice"
-    )
-    .value = "";
-
-
-  document
-    .getElementById(
-      "selectedProduct"
-    )
-    .style.display =
-      "none";
-
-
-  document
-    .getElementById(
-      "currentAmount"
-    )
-    .textContent =
-      "Amount: ₹0.00";
-
-
-  calculateTotal();
+  productSearch.focus();
 
 }
 
 
-/* ==================================================
-   RENDER BILL ITEMS
-================================================== */
+/* =========================
+   RENDER ITEMS
+========================= */
 
-function renderBillItems(){
+function renderItems(){
 
-  const container =
-    document.getElementById(
-      "billItems"
-    );
+  if(!currentItems.length){
 
+    itemsList.innerHTML =
+      `<div class="empty">
+        No products added yet
+      </div>`;
 
-  if(billItems.length === 0){
-
-    container.innerHTML =
-      '<div class="empty">No products added yet.</div>';
+    calculateTotal();
 
     return;
+
   }
 
 
-  container.innerHTML = "";
+  itemsList.innerHTML =
+    currentItems.map((item,index)=>{
 
+      return `
+        <div class="itemCard">
 
-  billItems.forEach(
-    (item,index) => {
+          <div class="itemHead">
 
-      const div =
-        document.createElement("div");
+            <div>
 
+              <div class="itemName">
+                ${index+1}. ${escapeHTML(item.product)}
+              </div>
 
-      div.className =
-        "bill-item";
+              <div class="itemInfo">
+                ${item.qty} ${escapeHTML(item.unit)}
+                × ₹${Number(item.price).toFixed(2)}
+              </div>
 
+            </div>
 
-      div.innerHTML = `
+            <div class="itemAmount">
+              ₹${Number(item.amount).toFixed(2)}
+            </div>
 
-        <div class="bill-item-title">
-          ${escapeHtml(item.product)}
-        </div>
+          </div>
 
-        <div class="item-line">
-          <span>
-            Qty: ${item.qty}
-          </span>
+          <div class="itemActions">
 
-          <span>
-            Price: ₹${item.price.toFixed(2)}
-          </span>
-        </div>
+            <button
+              class="danger"
+              onclick="removeItem(${index})">
 
-        <div class="item-line">
+              Remove
 
-          <span class="item-amount">
-            Amount: ₹${item.amount.toFixed(2)}
-          </span>
+            </button>
 
-          <button
-            class="remove-small"
-            onclick="removeBillItem(${index})"
-          >
-            Remove
-          </button>
+          </div>
 
         </div>
-
       `;
 
+    }).join("");
 
-      container.appendChild(div);
-
-    }
-  );
-
-}
-
-
-/* ==================================================
-   REMOVE BILL ITEM
-================================================== */
-
-function removeBillItem(index){
-
-  billItems.splice(index,1);
-
-  renderBillItems();
 
   calculateTotal();
 
 }
 
 
-/* ==================================================
-   CALCULATE TOTAL
-================================================== */
+/* =========================
+   REMOVE ITEM
+========================= */
+
+function removeItem(index){
+
+  currentItems.splice(index,1);
+
+  renderItems();
+
+}
+
+
+/* =========================
+   TOTAL
+========================= */
 
 function calculateTotal(){
 
-  let subtotal = 0;
+  const subtotalValue =
+    currentItems.reduce(
+      (sum,item) =>
+        sum + Number(item.amount || 0),
+      0
+    );
 
 
-  billItems.forEach(
-    item =>
-      subtotal += item.amount
-  );
+  let discountValue =
+    parseFloat(discount.value) || 0;
 
 
-  let discount =
-    Number(
-      document.getElementById(
-        "discount"
-      ).value
-    ) || 0;
+  if(discountValue < 0){
+    discountValue = 0;
+  }
 
 
-  if(discount > subtotal){
-
-    discount = subtotal;
-
-    document.getElementById(
-      "discount"
-    ).value =
-      discount;
-
+  if(discountValue > subtotalValue){
+    discountValue = subtotalValue;
   }
 
 
   const total =
-    subtotal - discount;
+    subtotalValue - discountValue;
 
 
-  document.getElementById(
-    "subTotal"
-  ).textContent =
-    subtotal.toFixed(2);
+  subtotal.textContent =
+    subtotalValue.toFixed(2);
 
+  discountDisplay.textContent =
+    discountValue.toFixed(2);
 
-  document.getElementById(
-    "discountAmount"
-  ).textContent =
-    discount.toFixed(2);
-
-
-  document.getElementById(
-    "grandTotal"
-  ).textContent =
+  grandTotal.textContent =
     total.toFixed(2);
 
 }
 
 
-/* ==================================================
+/* =========================
    SAVE ESTIMATE
-================================================== */
+========================= */
 
 function saveEstimate(){
 
-  if(billItems.length === 0){
+  if(!currentItems.length){
 
-    alert(
-      "Please add at least one product."
-    );
+    alert("Please add at least one product");
 
     return;
+
   }
 
 
-  const subtotal =
-    billItems.reduce(
-      (sum,item) =>
-        sum + item.amount,
+  const number =
+    estimateNo.value.trim();
+
+
+  const date =
+    estimateDate.value;
+
+
+  const discountValue =
+    parseFloat(discount.value) || 0;
+
+
+  const subtotalValue =
+    currentItems.reduce(
+      (sum,item)=>
+        sum + Number(item.amount || 0),
       0
     );
 
 
-  let discount =
-    Number(
-      document.getElementById(
-        "discount"
-      ).value
-    ) || 0;
-
-
-  discount =
+  const finalDiscount =
     Math.min(
-      discount,
-      subtotal
+      Math.max(discountValue,0),
+      subtotalValue
     );
 
 
-  const estimate = {
+  const total =
+    subtotalValue - finalDiscount;
+
+
+  const data = {
 
     id:
       editingEstimateId ||
-      Date.now().toString(),
+      "e_" + Date.now(),
 
-    estimateNo:
-      document.getElementById(
-        "estimateNo"
-      ).value,
+    number:number,
 
-    date:
-      document.getElementById(
-        "estimateDate"
-      ).value,
+    date:date,
 
-    customerName:
-      document.getElementById(
-        "customerName"
-      ).value.trim(),
+    items:currentItems,
 
-    customerMobile:
-      document.getElementById(
-        "customerMobile"
-      ).value.trim(),
+    subtotal:subtotalValue,
 
-    siteAddress:
-      document.getElementById(
-        "siteAddress"
-      ).value.trim(),
+    discount:finalDiscount,
 
-    items:
-      billItems,
-
-    subtotal,
-
-    discount,
-
-    grandTotal:
-      subtotal - discount,
-
-    notes:
-      document.getElementById(
-        "notes"
-      ).value.trim()
+    total:total
 
   };
 
 
   if(editingEstimateId){
 
-    estimates =
-      estimates.map(
-        x =>
-          x.id === editingEstimateId
-            ? estimate
-            : x
+    const index =
+      estimates.findIndex(
+        e => e.id === editingEstimateId
       );
+
+
+    if(index !== -1){
+
+      estimates[index] = data;
+
+    }
 
   }else{
 
-    estimates.unshift(
-      estimate
-    );
+    estimates.push(data);
 
   }
 
 
-  localStorage.setItem(
-    ESTIMATE_KEY,
-    JSON.stringify(estimates)
-  );
+  saveEstimates();
 
 
   alert(
     editingEstimateId
-      ? "Estimate updated successfully."
-      : "Estimate saved successfully."
+    ? "Estimate updated successfully"
+    : "Estimate saved successfully"
   );
 
 
   newEstimate();
 
-  renderEstimates();
+
+  showPage("estimates");
 
 }
 
 
-/* ==================================================
-   LOAD ESTIMATE
-================================================== */
+/* =========================
+   PRODUCTS LIST
+========================= */
 
-function loadEstimate(id){
+function renderProducts(){
 
-  const estimate =
-    estimates.find(
-      x => x.id === id
+  const search =
+    productListSearch.value
+    .trim()
+    .toLowerCase();
+
+
+  const filtered =
+    products.filter(p =>
+      p.name
+      .toLowerCase()
+      .includes(search)
     );
 
 
-  if(!estimate)
+  if(!filtered.length){
+
+    productsList.innerHTML =
+      `<div class="empty">
+        No products found
+      </div>`;
+
     return;
 
-
-  editingEstimateId =
-    id;
+  }
 
 
-  document.getElementById(
-    "estimateNo"
-  ).value =
-    estimate.estimateNo;
+  productsList.innerHTML =
+    filtered.map(p=>{
+
+      return `
+        <div class="productListItem">
+
+          <div class="listTop">
+
+            <div class="listName">
+              ${escapeHTML(p.name)}
+            </div>
+
+            <div class="unitBadge">
+              ${escapeHTML(p.unit)}
+            </div>
+
+          </div>
 
 
-  document.getElementById(
-    "estimateDate"
-  ).value =
-    estimate.date;
+          <div class="actions">
+
+            <button
+              class="secondary"
+              onclick="editProduct('${p.id}')">
+
+              Edit
+
+            </button>
+
+            <button
+              class="danger"
+              onclick="deleteProduct('${p.id}')">
+
+              Delete
+
+            </button>
+
+          </div>
+
+        </div>
+      `;
+
+    }).join("");
+
+}
 
 
-  document.getElementById(
-    "customerName"
-  ).value =
-    estimate.customerName || "";
+/* =========================
+   EDIT PRODUCT
+========================= */
+
+function editProduct(id){
+
+  const p =
+    products.find(x => x.id === id);
 
 
-  document.getElementById(
-    "customerMobile"
-  ).value =
-    estimate.customerMobile || "";
+  if(!p) return;
 
 
-  document.getElementById(
-    "siteAddress"
-  ).value =
-    estimate.siteAddress || "";
-
-
-  document.getElementById(
-    "discount"
-  ).value =
-    estimate.discount || "";
-
-
-  document.getElementById(
-    "notes"
-  ).value =
-    estimate.notes || "";
-
-
-  billItems =
-    estimate.items.map(
-      item => ({
-        product:item.product,
-        qty:Number(item.qty),
-        price:Number(item.price),
-        amount:Number(item.amount)
-      })
+  const newName =
+    prompt(
+      "Product Name",
+      p.name
     );
 
 
-  renderBillItems();
+  if(newName === null) return;
 
-  calculateTotal();
+
+  const cleanName =
+    newName.trim();
+
+
+  if(!cleanName){
+
+    alert("Product name cannot be empty");
+
+    return;
+
+  }
+
+
+  const newUnit =
+    prompt(
+      "Unit (Nos / Kg / Ton / Bag / Litre etc.)",
+      p.unit
+    );
+
+
+  if(newUnit === null) return;
+
+
+  const cleanUnit =
+    newUnit.trim();
+
+
+  if(!cleanUnit){
+
+    alert("Unit cannot be empty");
+
+    return;
+
+  }
+
+
+  p.name = cleanName;
+
+  p.unit = cleanUnit;
+
+
+  saveProducts();
+
+  renderProducts();
+
+}
+
+
+/* =========================
+   DELETE PRODUCT
+========================= */
+
+function deleteProduct(id){
+
+  const p =
+    products.find(x => x.id === id);
+
+
+  if(!p) return;
+
+
+  if(
+    !confirm(
+      `Delete "${p.name}"?`
+    )
+  ){
+
+    return;
+
+  }
+
+
+  products =
+    products.filter(
+      x => x.id !== id
+    );
+
+
+  saveProducts();
+
+  renderProducts();
+
+}
+
+
+/* =========================
+   ESTIMATES LIST
+========================= */
+
+function renderEstimates(){
+
+  const search =
+    estimateSearch.value
+    .trim()
+    .toLowerCase();
+
+
+  const filtered =
+    estimates
+    .slice()
+    .reverse()
+    .filter(e =>
+      String(e.number || "")
+      .toLowerCase()
+      .includes(search)
+    );
+
+
+  if(!filtered.length){
+
+    estimatesList.innerHTML =
+      `<div class="empty">
+        No saved estimates
+      </div>`;
+
+    return;
+
+  }
+
+
+  estimatesList.innerHTML =
+    filtered.map(e=>{
+
+      return `
+
+        <div class="estimateListItem">
+
+          <div class="listTop">
+
+            <div>
+
+              <div class="listName">
+                ${escapeHTML(e.number)}
+              </div>
+
+              <div class="itemInfo">
+                ${escapeHTML(e.date || "")}
+              </div>
+
+            </div>
+
+            <div class="itemAmount">
+              ₹${Number(e.total || 0).toFixed(2)}
+            </div>
+
+          </div>
+
+
+          <div class="itemInfo">
+            ${e.items ? e.items.length : 0} item(s)
+          </div>
+
+
+          <div class="actions">
+
+            <button
+              class="secondary"
+              onclick="editEstimate('${e.id}')">
+
+              Edit
+
+            </button>
+
+
+            <button
+              class="danger"
+              onclick="deleteEstimate('${e.id}')">
+
+              Delete
+
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+/* =========================
+   EDIT ESTIMATE
+========================= */
+
+function editEstimate(id){
+
+  const e =
+    estimates.find(x => x.id === id);
+
+
+  if(!e) return;
+
+
+  editingEstimateId = e.id;
+
+
+  estimateNo.value =
+    e.number || "";
+
+
+  estimateDate.value =
+    e.date || todayDate();
+
+
+  currentItems =
+    (e.items || []).map(item=>{
+
+      let unit =
+        item.unit || "";
+
+
+      if(!unit && item.productId){
+
+        const p =
+          products.find(
+            x => x.id === item.productId
+          );
+
+        if(p){
+          unit = p.unit;
+        }
+
+      }
+
+
+      if(!unit){
+
+        const p =
+          products.find(
+            x =>
+              x.name.toLowerCase() ===
+              String(item.product || "")
+              .toLowerCase()
+          );
+
+        if(p){
+          unit = p.unit;
+        }
+
+      }
+
+
+      return {
+
+        ...item,
+
+        unit:unit || "Nos",
+
+        qty:Number(item.qty || 0),
+
+        price:Number(item.price || 0),
+
+        amount:Number(
+          item.amount ||
+          (
+            Number(item.qty || 0) *
+            Number(item.price || 0)
+          )
+        )
+
+      };
+
+    });
+
+
+  discount.value =
+    e.discount || 0;
+
+
+  selectedProduct = null;
+
+  productSearch.value = "";
+
+  itemUnit.value = "";
+
+  itemQty.value = "";
+
+  itemPrice.value = "";
+
+  selectedProductBox.classList.add("hidden");
+
+
+  renderItems();
 
   showPage("home");
 
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
 }
 
 
-/* ==================================================
+/* =========================
    DELETE ESTIMATE
-================================================== */
+========================= */
 
 function deleteEstimate(id){
 
-  if(!confirm(
-    "Delete this estimate?"
-  ))
+  const e =
+    estimates.find(x => x.id === id);
+
+
+  if(!e) return;
+
+
+  if(
+    !confirm(
+      `Delete estimate ${e.number}?`
+    )
+  ){
+
     return;
+
+  }
 
 
   estimates =
@@ -1743,247 +1883,20 @@ function deleteEstimate(id){
     );
 
 
-  localStorage.setItem(
-    ESTIMATE_KEY,
-    JSON.stringify(estimates)
-  );
-
+  saveEstimates();
 
   renderEstimates();
 
 }
 
 
-/* ==================================================
-   RENDER ESTIMATES
-================================================== */
-
-function renderEstimates(){
-
-  const container =
-    document.getElementById(
-      "estimateList"
-    );
-
-
-  const search =
-    (
-      document.getElementById(
-        "estimateSearch"
-      )?.value || ""
-    )
-    .toLowerCase()
-    .trim();
-
-
-  const filtered =
-    estimates.filter(
-      x =>
-        String(
-          x.estimateNo || ""
-        )
-        .toLowerCase()
-        .includes(search)
-
-        ||
-
-        String(
-          x.customerName || ""
-        )
-        .toLowerCase()
-        .includes(search)
-    );
-
-
-  if(filtered.length === 0){
-
-    container.innerHTML =
-      '<div class="empty">No estimates found.</div>';
-
-    return;
-  }
-
-
-  container.innerHTML = "";
-
-
-  filtered.forEach(
-    estimate => {
-
-      const div =
-        document.createElement("div");
-
-
-      div.className =
-        "estimate-card";
-
-
-      div.innerHTML = `
-
-        <strong>
-          ${escapeHtml(
-            estimate.estimateNo
-          )}
-        </strong>
-
-        <div class="small">
-
-          ${escapeHtml(
-            estimate.date
-          )}
-
-          <br>
-
-          ${
-            escapeHtml(
-              estimate.customerName ||
-              "Customer not entered"
-            )
-          }
-
-        </div>
-
-        <div style="
-          font-size:18px;
-          font-weight:bold;
-          margin-top:6px;
-        ">
-
-          ₹${Number(
-            estimate.grandTotal || 0
-          ).toFixed(2)}
-
-        </div>
-
-        <div class="estimate-actions">
-
-          <button
-            class="primary"
-            onclick="loadEstimate('${estimate.id}')"
-          >
-            Edit
-          </button>
-
-          <button
-            class="danger"
-            onclick="deleteEstimate('${estimate.id}')"
-          >
-            Delete
-          </button>
-
-        </div>
-
-      `;
-
-
-      container.appendChild(div);
-
-    }
-  );
-
-}
-
-
-/* ==================================================
-   NEW ESTIMATE
-================================================== */
-
-function newEstimate(){
-
-  editingEstimateId =
-    null;
-
-
-  document.getElementById(
-    "estimateNo"
-  ).value =
-    generateEstimateNumber();
-
-
-  document.getElementById(
-    "estimateDate"
-  ).value =
-    new Date()
-      .toISOString()
-      .split("T")[0];
-
-
-  document.getElementById(
-    "customerName"
-  ).value = "";
-
-
-  document.getElementById(
-    "customerMobile"
-  ).value = "";
-
-
-  document.getElementById(
-    "siteAddress"
-  ).value = "";
-
-
-  document.getElementById(
-    "discount"
-  ).value = "";
-
-
-  document.getElementById(
-    "notes"
-  ).value = "";
-
-
-  billItems = [];
-
-  selectedProduct = null;
-
-
-  document.getElementById(
-    "productSearch"
-  ).value = "";
-
-
-  document.getElementById(
-    "billQty"
-  ).value = "";
-
-
-  document.getElementById(
-    "billPrice"
-  ).value = "";
-
-
-  document.getElementById(
-    "productResults"
-  ).innerHTML = "";
-
-
-  document.getElementById(
-    "selectedProduct"
-  ).style.display =
-    "none";
-
-
-  document.getElementById(
-    "currentAmount"
-  ).textContent =
-    "Amount: ₹0.00";
-
-
-  renderBillItems();
-
-  calculateTotal();
-
-}
-
-
-/* ==================================================
+/* =========================
    ESCAPE HTML
-================================================== */
+========================= */
 
-function escapeHtml(value){
+function escapeHTML(value){
 
-  return String(value)
+  return String(value ?? "")
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;")
@@ -1993,13 +1906,76 @@ function escapeHtml(value){
 }
 
 
-function escapeJs(value){
+/* =========================
+   CLOSE PRODUCT RESULTS
+========================= */
 
-  return String(value)
-    .replace(/\\/g,"\\\\")
-    .replace(/'/g,"\\'");
+document.addEventListener(
+  "click",
+  function(e){
 
-}
+    if(
+      !e.target.closest(".productSearchWrap")
+    ){
+
+      productResults.classList.add("hidden");
+
+    }
+
+  }
+);
+
+
+/* =========================
+   LIVE AMOUNT EVENTS
+========================= */
+
+itemQty.addEventListener(
+  "input",
+  calculateLiveAmount
+);
+
+itemPrice.addEventListener(
+  "input",
+  calculateLiveAmount
+);
+
+
+/* =========================
+   ENTER KEY
+========================= */
+
+itemPrice.addEventListener(
+  "keydown",
+  function(e){
+
+    if(e.key === "Enter"){
+
+      addItem();
+
+    }
+
+  }
+);
+
+
+/* =========================
+   START APP
+========================= */
+
+loadData();
+
+estimateNo.value =
+  getNextEstimateNumber();
+
+estimateDate.value =
+  todayDate();
+
+renderItems();
+
+renderProducts();
+
+renderEstimates();
 
 </script>
 
