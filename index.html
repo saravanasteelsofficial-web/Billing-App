@@ -1,955 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>Saravana Steel Company - Estimate</title>
-
-<style>
-
-*{
-  box-sizing:border-box;
-}
-
-html,
-body{
-  margin:0;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  font-family:Arial,sans-serif;
-  background:#eef2f5;
-  color:#222;
-}
-
-button,
-input,
-select{
-  font-family:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-/* =========================
-   HEADER
-========================= */
-
-header{
-  height:72px;
-  background:#0b1730;
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 24px;
-}
-
-.company{
-  font-size:21px;
-  font-weight:bold;
-}
-
-.company small{
-  display:block;
-  font-size:12px;
-  font-weight:normal;
-  margin-top:4px;
-  opacity:.85;
-}
-
-.headerRight{
-  text-align:right;
-  font-size:12px;
-  line-height:1.5;
-}
-
-/* =========================
-   NAV
-========================= */
-
-nav{
-  height:44px;
-  background:white;
-  border-bottom:1px solid #d5d9de;
-  display:flex;
-  align-items:center;
-  padding-left:20px;
-}
-
-nav button{
-  height:44px;
-  border:0;
-  background:white;
-  padding:0 24px;
-  font-size:14px;
-  font-weight:bold;
-  color:#555;
-}
-
-nav button.active{
-  color:#0b1730;
-  border-bottom:3px solid #0b1730;
-}
-
-/* =========================
-   PAGES
-========================= */
-
-.page{
-  display:none;
-  height:calc(100vh - 116px);
-  padding:12px 18px;
-  overflow:hidden;
-}
-
-.page.active{
-  display:block;
-}
-
-/* =========================
-   BILL SCREEN
-========================= */
-
-.billPage{
-  display:grid;
-  grid-template-rows:auto auto 1fr auto;
-  gap:10px;
-}
-
-/* =========================
-   BILL HEADER
-========================= */
-
-.billHeader{
-  background:white;
-  border:1px solid #d5d9de;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-  padding:10px 14px;
-}
-
-.billTitle{
-  font-size:18px;
-  font-weight:bold;
-  text-decoration:underline;
-}
-
-.headerField{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.headerField label{
-  font-size:13px;
-  font-weight:bold;
-  white-space:nowrap;
-}
-
-.headerField input{
-  height:34px;
-  border:1px solid #c8cdd3;
-  padding:6px 9px;
-  font-size:14px;
-  border-radius:4px;
-}
-
-/* =========================
-   ENTRY
-========================= */
-
-.entryPanel{
-  background:white;
-  border:1px solid #d5d9de;
-  padding:10px 14px;
-}
-
-.entryTitle{
-  font-size:14px;
-  font-weight:bold;
-  margin-bottom:8px;
-}
-
-.entryGrid{
-  display:grid;
-  grid-template-columns:minmax(280px,2fr) 100px 100px 130px 130px;
-  gap:8px;
-  align-items:end;
-}
-
-.field label{
-  display:block;
-  font-size:11px;
-  font-weight:bold;
-  margin-bottom:4px;
-}
-
-.field input{
-  width:100%;
-  height:34px;
-  border:1px solid #c8cdd3;
-  border-radius:4px;
-  padding:6px 8px;
-  font-size:14px;
-  background:white;
-}
-
-.amountBox{
-  height:34px;
-  border:1px solid #c8cdd3;
-  border-radius:4px;
-  display:flex;
-  align-items:center;
-  justify-content:flex-end;
-  padding:0 9px;
-  font-weight:bold;
-  background:#f7f8fa;
-}
-
-/* =========================
-   PRODUCT SEARCH
-========================= */
-
-.searchWrap{
-  position:relative;
-}
-
-.results{
-  position:absolute;
-  left:0;
-  right:0;
-  top:36px;
-  background:white;
-  border:1px solid #aaa;
-  max-height:260px;
-  overflow:auto;
-  z-index:999;
-  box-shadow:0 5px 14px rgba(0,0,0,.18);
-}
-
-.result{
-  display:grid;
-  grid-template-columns:1fr 80px;
-  gap:8px;
-  padding:8px 10px;
-  border-bottom:1px solid #eee;
-  font-size:13px;
-}
-
-.result:hover{
-  background:#eaf0ff;
-}
-
-.result.active{
-  background:#dce7ff;
-}
-
-.resultUnit{
-  text-align:right;
-  color:#666;
-}
-
-.hidden{
-  display:none !important;
-}
-
-/* =========================
-   BILL ITEMS
-========================= */
-
-.itemsPanel{
-  background:white;
-  border:1px solid #d5d9de;
-  min-height:0;
-  display:flex;
-  flex-direction:column;
-}
-
-.tableHeader{
-  display:grid;
-  grid-template-columns:45px minmax(300px,1fr) 90px 90px 120px 130px 55px;
-  background:#dce2e8;
-  border-bottom:1px solid #bfc6cd;
-  font-size:12px;
-  font-weight:bold;
-  min-height:32px;
-  align-items:center;
-}
-
-.tableHeader div{
-  padding:7px 8px;
-  border-right:1px solid #c8ced4;
-}
-
-.tableBody{
-  flex:1;
-  min-height:0;
-  overflow:auto;
-}
-
-.billRow{
-  display:grid;
-  grid-template-columns:45px minmax(300px,1fr) 90px 90px 120px 130px 55px;
-  min-height:35px;
-  align-items:center;
-  border-bottom:1px solid #e5e7e9;
-  font-size:13px;
-}
-
-.billRow:hover{
-  background:#f5f7f9;
-}
-
-.billRow div{
-  padding:7px 8px;
-  border-right:1px solid #edf0f2;
-}
-
-.right{
-  text-align:right;
-}
-
-.center{
-  text-align:center;
-}
-
-.removeBtn{
-  border:0;
-  background:#dc3545;
-  color:white;
-  border-radius:3px;
-  width:28px;
-  height:24px;
-  font-size:12px;
-}
-
-.emptyRow{
-  text-align:center;
-  color:#888;
-  padding:25px;
-  font-size:13px;
-}
-
-/* =========================
-   BOTTOM
-========================= */
-
-.bottomArea{
-  background:white;
-  border:1px solid #d5d9de;
-  display:grid;
-  grid-template-columns:1fr 350px;
-  gap:20px;
-  padding:10px 14px;
-}
-
-.bottomLeft{
-  display:flex;
-  align-items:flex-end;
-  gap:8px;
-}
-
-.hint{
-  color:#666;
-  font-size:12px;
-}
-
-.bottomRight{
-  border-left:1px solid #ddd;
-  padding-left:20px;
-}
-
-.totalLine{
-  display:flex;
-  justify-content:space-between;
-  margin:4px 0;
-  font-size:14px;
-}
-
-.totalLine input{
-  width:110px;
-  height:28px;
-  text-align:right;
-  border:1px solid #ccc;
-  border-radius:4px;
-}
-
-.grandTotal{
-  border-top:2px solid #222;
-  margin-top:7px;
-  padding-top:7px;
-  display:flex;
-  justify-content:space-between;
-  font-size:20px;
-  font-weight:bold;
-}
-
-.bottomButtons{
-  margin-top:8px;
-  display:flex;
-  gap:7px;
-}
-
-.primary{
-  border:0;
-  background:#0b1730;
-  color:white;
-  padding:9px 16px;
-  border-radius:4px;
-  font-weight:bold;
-}
-
-.secondary{
-  border:1px solid #bbb;
-  background:#eee;
-  color:#222;
-  padding:9px 16px;
-  border-radius:4px;
-  font-weight:bold;
-}
-
-.danger{
-  border:0;
-  background:#dc3545;
-  color:white;
-  padding:7px 12px;
-  border-radius:4px;
-}
-
-/* =========================
-   OTHER PAGES
-========================= */
-
-.simplePage{
-  height:100%;
-  overflow:auto;
-}
-
-.card{
-  background:white;
-  border:1px solid #d5d9de;
-  padding:14px;
-  margin-bottom:10px;
-}
-
-.card h2{
-  margin:0 0 12px;
-  font-size:18px;
-}
-
-.card label{
-  display:block;
-  font-size:13px;
-  font-weight:bold;
-  margin:9px 0 5px;
-}
-
-.card input,
-.card select{
-  width:100%;
-  height:36px;
-  border:1px solid #ccc;
-  border-radius:4px;
-  padding:7px;
-  font-size:14px;
-}
-
-.productList,
-.estimateList{
-  margin-top:10px;
-}
-
-.listItem{
-  border:1px solid #ddd;
-  padding:10px;
-  margin-top:7px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.listName{
-  font-weight:bold;
-}
-
-.badge{
-  font-size:12px;
-  color:#666;
-}
-
-.actions{
-  display:flex;
-  gap:6px;
-}
-
-.empty{
-  text-align:center;
-  color:#888;
-  padding:20px;
-}
-
-/* =========================
-   DESKTOP FIT
-========================= */
-
-@media(max-width:900px){
-
-  .entryGrid{
-    grid-template-columns:2fr 80px 80px 110px 110px;
-  }
-
-  .tableHeader,
-  .billRow{
-    grid-template-columns:40px minmax(220px,1fr) 75px 75px 100px 110px 50px;
-  }
-
-  .bottomArea{
-    grid-template-columns:1fr 300px;
-  }
-
-}
-
-</style>
-</head>
-
-<body>
-
-<header>
-
-  <div class="company">
-    Saravana Steel Company
-    <small>Estimate & Billing</small>
-  </div>
-
-  <div class="headerRight">
-    No.7, New Goller Street, Opp. Bus Stand<br>
-    Alangayam - 635701 &nbsp; | &nbsp;
-    📞 9943706320 / 7010795644
-  </div>
-
-</header>
-
-
-<nav>
-
-  <button
-    id="homeNav"
-    class="active"
-    onclick="showPage('home')">
-    🧾 Billing
-  </button>
-
-  <button
-    id="productsNav"
-    onclick="showPage('products')">
-    📦 Products
-  </button>
-
-  <button
-    id="estimatesNav"
-    onclick="showPage('estimates')">
-    📋 Estimates
-  </button>
-
-</nav>
-
-
-<!-- =====================================================
-     BILLING PAGE
-===================================================== -->
-
-<section
-  id="home"
-  class="page billPage">
-
-
-  <!-- HEADER -->
-
-  <div class="billHeader">
-
-    <div class="headerField">
-
-      <div class="billTitle">
-        ESTIMATE
-      </div>
-
-      <label>
-        Estimate No.
-      </label>
-
-      <input
-        id="estimateNo"
-        readonly>
-
-    </div>
-
-
-    <div class="headerField">
-
-      <label>
-        Date
-      </label>
-
-      <input
-        id="estimateDate"
-        type="date">
-
-    </div>
-
-  </div>
-
-
-  <!-- ENTRY -->
-
-  <div class="entryPanel">
-
-    <div class="entryTitle">
-      ➕ Add Product
-    </div>
-
-
-    <div class="entryGrid">
-
-
-      <!-- PRODUCT -->
-
-      <div class="field">
-
-        <label>
-          Product
-        </label>
-
-        <div class="searchWrap">
-
-          <input
-            id="productSearch"
-            placeholder="Search / select product..."
-            autocomplete="off">
-
-          <div
-            id="productResults"
-            class="results hidden">
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- UNIT -->
-
-      <div class="field">
-
-        <label>
-          Unit
-        </label>
-
-        <input
-          id="unit"
-          readonly
-          placeholder="-">
-
-      </div>
-
-
-      <!-- QTY -->
-
-      <div class="field">
-
-        <label>
-          Qty
-        </label>
-
-        <input
-          id="qty"
-          type="number"
-          min="0"
-          step="0.01"
-          placeholder="Qty">
-
-      </div>
-
-
-      <!-- RATE -->
-
-      <div class="field">
-
-        <label>
-          Rate
-        </label>
-
-        <input
-          id="rate"
-          type="number"
-          min="0"
-          step="0.01"
-          placeholder="Rate + ENTER">
-
-      </div>
-
-
-      <!-- AMOUNT -->
-
-      <div class="field">
-
-        <label>
-          Amount
-        </label>
-
-        <div class="amountBox">
-          ₹<span id="liveAmount">0.00</span>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- ITEMS -->
-
-  <div class="itemsPanel">
-
-    <div class="tableHeader">
-
-      <div>S.No</div>
-      <div>Product</div>
-      <div>Qty</div>
-      <div>Unit</div>
-      <div>Rate</div>
-      <div>Amount</div>
-      <div></div>
-
-    </div>
-
-
-    <div
-      id="items"
-      class="tableBody">
-
-    </div>
-
-  </div>
-
-
-  <!-- BOTTOM -->
-
-  <div class="bottomArea">
-
-
-    <div class="bottomLeft">
-
-      <div class="hint">
-        ⏎ Press ENTER after Rate to add product and continue
-      </div>
-
-      <div class="bottomButtons">
-
-        <button
-          class="primary"
-          onclick="generateBill()">
-          🧾 Save Estimate
-        </button>
-
-        <button
-          class="secondary"
-          onclick="newEstimate()">
-          + New
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <div class="bottomRight">
-
-      <div class="totalLine">
-
-        <span>
-          Subtotal
-        </span>
-
-        <strong>
-          ₹<span id="subtotal">0.00</span>
-        </strong>
-
-      </div>
-
-
-      <div class="totalLine">
-
-        <span>
-          Discount
-        </span>
-
-        <input
-          id="discount"
-          type="number"
-          min="0"
-          step="0.01"
-          value="0">
-
-      </div>
-
-
-      <div class="grandTotal">
-
-        <span>
-          Total Amount
-        </span>
-
-        <span>
-          ₹<span id="grandTotal">0.00</span>
-        </span>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =====================================================
-     PRODUCTS
-===================================================== -->
-
-<section
-  id="products"
-  class="page simplePage">
-
-  <div class="card">
-
-    <h2>
-      📦 Products
-    </h2>
-
-    <label>
-      Product Name
-    </label>
-
-    <input
-      id="newProductName"
-      placeholder="Example: TMT 10mm">
-
-
-    <label>
-      Unit
-    </label>
-
-    <select id="newProductUnit">
-
-      <option value="">
-        Select Unit
-      </option>
-
-      <option value="Nos">Nos</option>
-      <option value="Kg">Kg</option>
-      <option value="Ton">Ton</option>
-      <option value="Bag">Bag</option>
-      <option value="Litre">Litre</option>
-      <option value="Piece">Piece</option>
-      <option value="Box">Box</option>
-      <option value="Meter">Meter</option>
-
-    </select>
-
-
-    <button
-      class="primary"
-      style="margin-top:10px"
-      onclick="saveProduct()">
-
-      💾 Save Product
-
-    </button>
-
-  </div>
-
-
-  <div class="card">
-
-    <input
-      id="productListSearch"
-      placeholder="🔎 Search products..."
-      oninput="renderProducts()">
-
-    <div
-      id="productList"
-      class="productList">
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =====================================================
-     ESTIMATES
-===================================================== -->
-
-<section
-  id="estimates"
-  class="page simplePage">
-
-  <div class="card">
-
-    <h2>
-      📋 Saved Estimates
-    </h2>
-
-    <input
-      id="estimateSearch"
-      placeholder="🔎 Search estimate..."
-      oninput="renderEstimates()">
-
-    <div
-      id="estimateList"
-      class="estimateList">
-    </div>
-
-  </div>
-
-</section>
-
-
 <script>
 
 /* =====================================================
    STORAGE
 ===================================================== */
 
-const PRODUCT_KEY =
-  "saravana_products_v2";
-
-const OLD_PRODUCT_KEY =
-  "saravana_products_v1";
-
-const ESTIMATE_KEY =
-  "saravana_estimates_v5";
+const PRODUCT_KEY = "saravana_products_v2";
+const OLD_PRODUCT_KEY = "saravana_products_v1";
+const ESTIMATE_KEY = "saravana_estimates_v5";
 
 
 let products = [];
-
 let estimates = [];
-
 let billItems = [];
 
 let selectedProductData = null;
-
 let editingEstimate = null;
+
+let highlightedProductIndex = -1;
 
 
 /* =====================================================
    ELEMENTS
 ===================================================== */
+
+const homePage =
+  document.getElementById("home");
+
+const productsPage =
+  document.getElementById("products");
+
+const estimatesPage =
+  document.getElementById("estimates");
+
+const homeNav =
+  document.getElementById("homeNav");
+
+const productsNav =
+  document.getElementById("productsNav");
+
+const estimatesNav =
+  document.getElementById("estimatesNav");
 
 const productSearch =
   document.getElementById("productSearch");
@@ -987,9 +77,21 @@ const estimateNoInput =
 const estimateDateInput =
   document.getElementById("estimateDate");
 
+const productListSearch =
+  document.getElementById("productListSearch");
+
+const productList =
+  document.getElementById("productList");
+
+const estimateSearch =
+  document.getElementById("estimateSearch");
+
+const estimateList =
+  document.getElementById("estimateList");
+
 
 /* =====================================================
-   LOAD
+   LOAD DATA
 ===================================================== */
 
 function loadData(){
@@ -1017,7 +119,7 @@ function loadData(){
         products =
           oldList.map((p,i)=>{
 
-            if(typeof p==="string"){
+            if(typeof p === "string"){
 
               return {
                 id:
@@ -1054,7 +156,7 @@ function loadData(){
 
     }
 
-  }catch(e){
+  }catch(error){
 
     products=[];
 
@@ -1063,14 +165,29 @@ function loadData(){
 
   try{
 
-    estimates =
-      JSON.parse(
-        localStorage.getItem(ESTIMATE_KEY)
-        || localStorage.getItem("saravana_estimates_v4")
-        || "[]"
-      );
+    const savedEstimates =
+      localStorage.getItem(ESTIMATE_KEY);
 
-  }catch(e){
+    if(savedEstimates){
+
+      estimates =
+        JSON.parse(savedEstimates);
+
+    }else{
+
+      const oldEstimates =
+        localStorage.getItem(
+          "saravana_estimates_v4"
+        );
+
+      estimates =
+        oldEstimates
+        ? JSON.parse(oldEstimates)
+        : [];
+
+    }
+
+  }catch(error){
 
     estimates=[];
 
@@ -1104,33 +221,39 @@ function saveEstimates(){
 
 
 /* =====================================================
-   PAGE
+   PAGE NAVIGATION
 ===================================================== */
 
 function showPage(page){
 
   document
     .querySelectorAll(".page")
-    .forEach(x =>
-      x.classList.remove("active")
-    );
+    .forEach(section=>{
 
+      section.classList.remove("active");
 
-  document
-    .getElementById(page)
-    .classList.add("active");
+    });
 
 
   document
     .querySelectorAll("nav button")
-    .forEach(x =>
-      x.classList.remove("active")
-    );
+    .forEach(button=>{
+
+      button.classList.remove("active");
+
+    });
 
 
-  if(page==="home"){
+  if(page === "home"){
+
+    homePage.classList.add("active");
 
     homeNav.classList.add("active");
+
+    /*
+       Do NOT automatically open
+       product list here.
+    */
 
     setTimeout(()=>{
 
@@ -1141,18 +264,30 @@ function showPage(page){
   }
 
 
-  if(page==="products"){
+  if(page === "products"){
+
+    productsPage.classList.add("active");
 
     productsNav.classList.add("active");
+
+    productResults
+      .classList
+      .add("hidden");
 
     renderProducts();
 
   }
 
 
-  if(page==="estimates"){
+  if(page === "estimates"){
+
+    estimatesPage.classList.add("active");
 
     estimatesNav.classList.add("active");
+
+    productResults
+      .classList
+      .add("hidden");
 
     renderEstimates();
 
@@ -1192,20 +327,22 @@ function today(){
 
 function nextEstimateNumber(){
 
-  let max=0;
+  let max = 0;
+
 
   estimates.forEach(e=>{
 
     const match =
-      String(e.number||"")
+      String(e.number || "")
       .match(/(\d+)$/);
+
 
     if(match){
 
       max =
         Math.max(
           max,
-          parseInt(match[1])
+          parseInt(match[1],10)
         );
 
     }
@@ -1226,11 +363,13 @@ function nextEstimateNumber(){
 
 function newEstimate(){
 
-  editingEstimate=null;
+  editingEstimate = null;
 
-  billItems=[];
+  billItems = [];
 
-  selectedProductData=null;
+  selectedProductData = null;
+
+  highlightedProductIndex = -1;
 
 
   estimateNoInput.value =
@@ -1240,19 +379,23 @@ function newEstimate(){
     today();
 
 
-  productSearch.value="";
+  productSearch.value = "";
 
-  unitInput.value="";
+  unitInput.value = "";
 
-  qtyInput.value="";
+  qtyInput.value = "";
 
-  rateInput.value="";
+  rateInput.value = "";
 
-  discountInput.value="0";
+  discountInput.value = "0";
 
-  liveAmount.textContent="0.00";
+  liveAmount.textContent = "0.00";
 
-  productResults.classList.add("hidden");
+
+  productResults
+    .classList
+    .add("hidden");
+
 
   renderItems();
 
@@ -1267,10 +410,10 @@ function newEstimate(){
 
 
 /* =====================================================
-   PRODUCT SEARCH
+   PRODUCT SEARCH LIST
 ===================================================== */
 
-function searchProducts(){
+function getFilteredProducts(){
 
   const text =
     productSearch.value
@@ -1278,20 +421,59 @@ function searchProducts(){
     .toLowerCase();
 
 
-  let list =
-    products;
+  if(!text){
 
-
-  if(text){
-
-    list =
-      products.filter(p =>
-        String(p.name||"")
-        .toLowerCase()
-        .includes(text)
-      );
+    return [];
 
   }
+
+
+  return products.filter(p=>{
+
+    return String(p.name || "")
+      .toLowerCase()
+      .includes(text);
+
+  });
+
+}
+
+
+/* =====================================================
+   SEARCH PRODUCTS
+===================================================== */
+
+function searchProducts(){
+
+  const text =
+    productSearch.value
+    .trim();
+
+
+  /*
+     VERY IMPORTANT:
+
+     Empty search = popup CLOSED
+  */
+
+  if(!text){
+
+    productResults
+      .classList
+      .add("hidden");
+
+    highlightedProductIndex = -1;
+
+    return;
+
+  }
+
+
+  const list =
+    getFilteredProducts();
+
+
+  highlightedProductIndex = -1;
 
 
   if(!list.length){
@@ -1310,7 +492,7 @@ function searchProducts(){
 
         <div
           class="result"
-          data-id="${escapeHTML(p.id)}">
+          data-index="${index}">
 
           <strong>
             ${escapeHTML(p.name)}
@@ -1336,53 +518,144 @@ function searchProducts(){
 
 
 /* =====================================================
+   HIGHLIGHT PRODUCT
+===================================================== */
+
+function highlightProduct(index){
+
+  const rows =
+    productResults
+    .querySelectorAll(".result");
+
+
+  if(!rows.length)
+    return;
+
+
+  if(index < 0)
+    index = 0;
+
+
+  if(index >= rows.length)
+    index = rows.length - 1;
+
+
+  rows.forEach(row=>{
+
+    row.classList.remove("active");
+
+  });
+
+
+  const row =
+    rows[index];
+
+
+  if(row){
+
+    row.classList.add("active");
+
+    row.scrollIntoView({
+      block:"nearest"
+    });
+
+  }
+
+
+  highlightedProductIndex =
+    index;
+
+}
+
+
+/* =====================================================
+   SELECT PRODUCT
+===================================================== */
+
+function selectProductByIndex(index){
+
+  const list =
+    getFilteredProducts();
+
+
+  if(!list.length)
+    return;
+
+
+  const product =
+    list[index];
+
+
+  if(!product)
+    return;
+
+
+  selectProduct(
+    product.id
+  );
+
+}
+
+
+/* =====================================================
    SELECT PRODUCT
 ===================================================== */
 
 function selectProduct(id){
 
-  const p =
+  const product =
     products.find(
-      x => String(x.id)===String(id)
+      p =>
+        String(p.id) ===
+        String(id)
     );
 
 
-  if(!p)
+  if(!product)
     return;
 
 
-  /*
-     IMPORTANT:
-     Product data and HTML element
-     now have different names.
-  */
-
-  selectedProductData=p;
+  selectedProductData =
+    product;
 
 
   productSearch.value =
-    p.name;
+    product.name;
+
 
   unitInput.value =
-    p.unit;
+    product.unit;
 
+
+  /*
+     CLOSE POPUP IMMEDIATELY
+  */
 
   productResults
     .classList
     .add("hidden");
 
 
+  highlightedProductIndex = -1;
+
+
   /*
-     Automatically go to quantity
+     GO TO QTY
   */
 
-  qtyInput.focus();
+  setTimeout(()=>{
+
+    qtyInput.focus();
+
+    qtyInput.select();
+
+  },50);
 
 }
 
 
 /* =====================================================
-   CLICK PRODUCT RESULT
+   PRODUCT RESULT CLICK
 ===================================================== */
 
 productResults.addEventListener(
@@ -1392,12 +665,185 @@ productResults.addEventListener(
     const row =
       e.target.closest(".result");
 
+
     if(!row)
       return;
 
-    selectProduct(
-      row.dataset.id
-    );
+
+    const index =
+      parseInt(
+        row.dataset.index,
+        10
+      );
+
+
+    selectProductByIndex(index);
+
+  }
+);
+
+
+/* =====================================================
+   PRODUCT SEARCH KEYBOARD
+===================================================== */
+
+productSearch.addEventListener(
+  "keydown",
+  function(e){
+
+    const rows =
+      productResults
+      .querySelectorAll(".result");
+
+
+    /*
+       DOWN ARROW
+    */
+
+    if(e.key === "ArrowDown"){
+
+      e.preventDefault();
+
+
+      if(
+        productResults.classList
+        .contains("hidden")
+      ){
+
+        searchProducts();
+
+      }
+
+
+      const current =
+        highlightedProductIndex;
+
+
+      highlightProduct(
+        current + 1
+      );
+
+
+      return;
+
+    }
+
+
+    /*
+       UP ARROW
+    */
+
+    if(e.key === "ArrowUp"){
+
+      e.preventDefault();
+
+
+      if(!rows.length)
+        return;
+
+
+      let next =
+        highlightedProductIndex - 1;
+
+
+      if(next < 0){
+
+        next =
+          rows.length - 1;
+
+      }
+
+
+      highlightProduct(next);
+
+      return;
+
+    }
+
+
+    /*
+       ENTER
+    */
+
+    if(e.key === "Enter"){
+
+      e.preventDefault();
+
+
+      if(
+        !productResults.classList
+        .contains("hidden")
+      ){
+
+        if(
+          highlightedProductIndex >= 0
+        ){
+
+          selectProductByIndex(
+            highlightedProductIndex
+          );
+
+        }else{
+
+          /*
+             If nothing highlighted,
+             select first product.
+          */
+
+          const first =
+            productResults
+            .querySelector(".result");
+
+
+          if(first){
+
+            selectProductByIndex(0);
+
+          }
+
+        }
+
+      }
+
+      return;
+
+    }
+
+
+    /*
+       ESC
+    */
+
+    if(e.key === "Escape"){
+
+      e.preventDefault();
+
+      productResults
+        .classList
+        .add("hidden");
+
+      highlightedProductIndex=-1;
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   SEARCH INPUT
+===================================================== */
+
+productSearch.addEventListener(
+  "input",
+  function(){
+
+    /*
+       List opens ONLY when
+       user types.
+    */
+
+    searchProducts();
 
   }
 );
@@ -1410,10 +856,15 @@ productResults.addEventListener(
 function liveCalculate(){
 
   const q =
-    parseFloat(qtyInput.value)||0;
+    parseFloat(
+      qtyInput.value
+    ) || 0;
+
 
   const r =
-    parseFloat(rateInput.value)||0;
+    parseFloat(
+      rateInput.value
+    ) || 0;
 
 
   liveAmount.textContent =
@@ -1427,6 +878,7 @@ qtyInput.addEventListener(
   liveCalculate
 );
 
+
 rateInput.addEventListener(
   "input",
   liveCalculate
@@ -1434,45 +886,14 @@ rateInput.addEventListener(
 
 
 /* =====================================================
-   ENTER FROM PRODUCT
-===================================================== */
-
-productSearch.addEventListener(
-  "keydown",
-  function(e){
-
-    if(e.key!=="Enter")
-      return;
-
-    e.preventDefault();
-
-
-    const first =
-      productResults
-      .querySelector(".result");
-
-
-    if(first){
-
-      selectProduct(
-        first.dataset.id
-      );
-
-    }
-
-  }
-);
-
-
-/* =====================================================
-   ENTER FROM QTY
+   QTY ENTER
 ===================================================== */
 
 qtyInput.addEventListener(
   "keydown",
   function(e){
 
-    if(e.key==="Enter"){
+    if(e.key === "Enter"){
 
       e.preventDefault();
 
@@ -1485,14 +906,14 @@ qtyInput.addEventListener(
 
 
 /* =====================================================
-   ENTER FROM RATE
+   RATE ENTER
 ===================================================== */
 
 rateInput.addEventListener(
   "keydown",
   function(e){
 
-    if(e.key==="Enter"){
+    if(e.key === "Enter"){
 
       e.preventDefault();
 
@@ -1524,11 +945,15 @@ function addItem(){
 
 
   const q =
-    parseFloat(qtyInput.value);
+    parseFloat(
+      qtyInput.value
+    );
 
 
   const r =
-    parseFloat(rateInput.value);
+    parseFloat(
+      rateInput.value
+    );
 
 
   if(!q || q<=0){
@@ -1587,21 +1012,24 @@ function addItem(){
      RESET
   */
 
-  selectedProductData=null;
+  selectedProductData = null;
 
-  productSearch.value="";
+  productSearch.value = "";
 
-  unitInput.value="";
+  unitInput.value = "";
 
-  qtyInput.value="";
+  qtyInput.value = "";
 
-  rateInput.value="";
+  rateInput.value = "";
 
-  liveAmount.textContent="0.00";
+  liveAmount.textContent = "0.00";
 
   productResults
     .classList
     .add("hidden");
+
+
+  highlightedProductIndex = -1;
 
 
   /*
@@ -1672,7 +1100,9 @@ function renderItems(){
           <button
             class="removeBtn"
             onclick="removeItem(${i})">
+
             ×
+
           </button>
 
         </div>
@@ -1689,12 +1119,15 @@ function renderItems(){
 
 
 /* =====================================================
-   REMOVE
+   REMOVE ITEM
 ===================================================== */
 
-function removeItem(i){
+function removeItem(index){
 
-  billItems.splice(i,1);
+  billItems.splice(
+    index,
+    1
+  );
 
   renderItems();
 
@@ -1707,34 +1140,35 @@ function removeItem(i){
 
 function calculateTotal(){
 
-  const sub =
+  const subtotal =
     billItems.reduce(
-      (sum,x)=>
-        sum + Number(x.amount||0),
+      (sum,item)=>
+        sum +
+        Number(item.amount || 0),
       0
     );
 
 
-  let dis =
+  let discount =
     parseFloat(
       discountInput.value
-    )||0;
+    ) || 0;
 
 
-  if(dis<0)
-    dis=0;
+  if(discount < 0)
+    discount=0;
 
 
-  if(dis>sub)
-    dis=sub;
+  if(discount > subtotal)
+    discount=subtotal;
 
 
   const total =
-    sub-dis;
+    subtotal - discount;
 
 
   subtotalBox.textContent =
-    sub.toFixed(2);
+    subtotal.toFixed(2);
 
 
   grandTotalBox.textContent =
@@ -1768,33 +1202,34 @@ function generateBill(){
   }
 
 
-  const sub =
+  const subtotal =
     billItems.reduce(
-      (sum,x)=>
-        sum+Number(x.amount||0),
+      (sum,item)=>
+        sum +
+        Number(item.amount || 0),
       0
     );
 
 
-  let dis =
+  let discount =
     parseFloat(
       discountInput.value
-    )||0;
+    ) || 0;
 
 
-  if(dis<0)
-    dis=0;
+  if(discount < 0)
+    discount=0;
 
 
-  if(dis>sub)
-    dis=sub;
+  if(discount > subtotal)
+    discount=subtotal;
 
 
   const total =
-    sub-dis;
+    subtotal - discount;
 
 
-  const bill={
+  const bill = {
 
     id:
       editingEstimate ||
@@ -1810,10 +1245,10 @@ function generateBill(){
       billItems,
 
     subtotal:
-      sub,
+      subtotal,
 
     discount:
-      dis,
+      discount,
 
     total:
       total
@@ -1825,19 +1260,24 @@ function generateBill(){
 
     const index =
       estimates.findIndex(
-        x=>x.id===editingEstimate
+        x =>
+          x.id ===
+          editingEstimate
       );
 
 
-    if(index!==-1){
+    if(index !== -1){
 
-      estimates[index]=bill;
+      estimates[index] =
+        bill;
 
     }
 
   }else{
 
-    estimates.push(bill);
+    estimates.push(
+      bill
+    );
 
   }
 
@@ -1853,6 +1293,9 @@ function generateBill(){
 
 
   newEstimate();
+
+
+  showPage("estimates");
 
 }
 
@@ -1870,7 +1313,7 @@ function saveProduct(){
     .trim();
 
 
-  const u =
+  const unit =
     document
     .getElementById("newProductUnit")
     .value;
@@ -1887,7 +1330,7 @@ function saveProduct(){
   }
 
 
-  if(!u){
+  if(!unit){
 
     alert(
       "Please select unit"
@@ -1901,7 +1344,8 @@ function saveProduct(){
   const exists =
     products.some(
       p =>
-        p.name.toLowerCase()===
+        p.name
+        .toLowerCase() ===
         name.toLowerCase()
     );
 
@@ -1926,7 +1370,7 @@ function saveProduct(){
       name,
 
     unit:
-      u
+      unit
 
   });
 
@@ -1936,12 +1380,12 @@ function saveProduct(){
 
   document
     .getElementById("newProductName")
-    .value="";
+    .value = "";
 
 
   document
     .getElementById("newProductUnit")
-    .value="";
+    .value = "";
 
 
   renderProducts();
@@ -1955,15 +1399,13 @@ function saveProduct(){
 
 
 /* =====================================================
-   PRODUCTS LIST
+   RENDER PRODUCTS
 ===================================================== */
 
 function renderProducts(){
 
-  const search =
-    document
-    .getElementById("productListSearch")
-    .value
+  const text =
+    productListSearch.value
     .trim()
     .toLowerCase();
 
@@ -1973,18 +1415,13 @@ function renderProducts(){
       p =>
         p.name
         .toLowerCase()
-        .includes(search)
+        .includes(text)
     );
-
-
-  const box =
-    document
-    .getElementById("productList");
 
 
   if(!list.length){
 
-    box.innerHTML =
+    productList.innerHTML =
       `<div class="empty">
         No products found
       </div>`;
@@ -1994,19 +1431,25 @@ function renderProducts(){
   }
 
 
-  box.innerHTML =
-    list.map(p=>`
+  productList.innerHTML =
+    list
+    .map(p=>`
 
       <div class="listItem">
 
         <div>
 
           <div class="listName">
+
             ${escapeHTML(p.name)}
+
           </div>
 
           <div class="badge">
-            Unit: ${escapeHTML(p.unit)}
+
+            Unit:
+            ${escapeHTML(p.unit)}
+
           </div>
 
         </div>
@@ -2017,13 +1460,18 @@ function renderProducts(){
           <button
             class="secondary"
             onclick="editProduct('${p.id}')">
+
             Edit
+
           </button>
+
 
           <button
             class="danger"
             onclick="deleteProduct('${p.id}')">
+
             Delete
+
           </button>
 
         </div>
@@ -2042,40 +1490,44 @@ function renderProducts(){
 
 function editProduct(id){
 
-  const p =
+  const product =
     products.find(
-      x=>x.id===id
+      p =>
+        String(p.id) ===
+        String(id)
     );
 
 
-  if(!p)
+  if(!product)
     return;
 
 
   const name =
     prompt(
       "Product Name",
-      p.name
+      product.name
     );
 
 
-  if(name===null)
+  if(name === null)
     return;
 
 
-  const u =
+  const unit =
     prompt(
       "Unit",
-      p.unit
+      product.unit
     );
 
 
-  if(u===null)
+  if(unit === null)
     return;
 
 
-  if(!name.trim() ||
-     !u.trim()){
+  if(
+    !name.trim() ||
+    !unit.trim()
+  ){
 
     alert(
       "Both fields are required"
@@ -2086,11 +1538,11 @@ function editProduct(id){
   }
 
 
-  p.name =
+  product.name =
     name.trim();
 
-  p.unit =
-    u.trim();
+  product.unit =
+    unit.trim();
 
 
   saveProducts();
@@ -2106,19 +1558,21 @@ function editProduct(id){
 
 function deleteProduct(id){
 
-  const p =
+  const product =
     products.find(
-      x=>x.id===id
+      p =>
+        String(p.id) ===
+        String(id)
     );
 
 
-  if(!p)
+  if(!product)
     return;
 
 
   if(
     !confirm(
-      `Delete "${p.name}"?`
+      `Delete "${product.name}"?`
     )
   )
     return;
@@ -2126,7 +1580,9 @@ function deleteProduct(id){
 
   products =
     products.filter(
-      x=>x.id!==id
+      p =>
+        String(p.id) !==
+        String(id)
     );
 
 
@@ -2138,15 +1594,13 @@ function deleteProduct(id){
 
 
 /* =====================================================
-   ESTIMATES
+   RENDER ESTIMATES
 ===================================================== */
 
 function renderEstimates(){
 
-  const search =
-    document
-    .getElementById("estimateSearch")
-    .value
+  const text =
+    estimateSearch.value
     .trim()
     .toLowerCase();
 
@@ -2155,22 +1609,33 @@ function renderEstimates(){
     estimates
     .slice()
     .reverse()
-    .filter(
-      e =>
-        String(e.number||"")
-        .toLowerCase()
-        .includes(search)
-    );
+    .filter(e=>{
+
+      const number =
+        String(
+          e.number || ""
+        )
+        .toLowerCase();
 
 
-  const box =
-    document
-    .getElementById("estimateList");
+      const date =
+        String(
+          e.date || ""
+        )
+        .toLowerCase();
+
+
+      return (
+        number.includes(text) ||
+        date.includes(text)
+      );
+
+    });
 
 
   if(!list.length){
 
-    box.innerHTML =
+    estimateList.innerHTML =
       `<div class="empty">
         No saved estimates
       </div>`;
@@ -2180,21 +1645,33 @@ function renderEstimates(){
   }
 
 
-  box.innerHTML =
-    list.map(e=>`
+  estimateList.innerHTML =
+    list
+    .map(e=>`
 
       <div class="listItem">
 
         <div>
 
           <div class="listName">
-            ${escapeHTML(e.number)}
+
+            ${escapeHTML(
+              e.number
+            )}
+
           </div>
 
           <div class="badge">
-            ${escapeHTML(e.date||"")}
+
+            ${escapeHTML(
+              e.date || ""
+            )}
+
             &nbsp; | &nbsp;
-            ${(e.items||[]).length} product(s)
+
+            ${(e.items || []).length}
+            product(s)
+
           </div>
 
         </div>
@@ -2203,7 +1680,11 @@ function renderEstimates(){
         <div>
 
           <strong>
-            ₹${Number(e.total||0).toFixed(2)}
+
+            ₹${Number(
+              e.total || 0
+            ).toFixed(2)}
+
           </strong>
 
         </div>
@@ -2214,13 +1695,18 @@ function renderEstimates(){
           <button
             class="secondary"
             onclick="editEstimate('${e.id}')">
+
             Edit
+
           </button>
+
 
           <button
             class="danger"
             onclick="deleteEstimate('${e.id}')">
+
             Delete
+
           </button>
 
         </div>
@@ -2239,57 +1725,63 @@ function renderEstimates(){
 
 function editEstimate(id){
 
-  const e =
+  const estimate =
     estimates.find(
-      x=>x.id===id
+      e =>
+        String(e.id) ===
+        String(id)
     );
 
 
-  if(!e)
+  if(!estimate)
     return;
 
 
-  editingEstimate=e.id;
+  editingEstimate =
+    estimate.id;
 
 
   estimateNoInput.value =
-    e.number||"";
+    estimate.number || "";
 
 
   estimateDateInput.value =
-    e.date||today();
+    estimate.date || today();
 
 
   billItems =
-    (e.items||[]).map(x=>({
+    (estimate.items || [])
+    .map(item=>({
 
       productId:
-        x.productId||"",
+        item.productId || "",
 
       product:
-        x.product||"",
+        item.product || "",
 
       unit:
-        x.unit||"Nos",
+        item.unit || "Nos",
 
       qty:
-        Number(x.qty||0),
+        Number(
+          item.qty || 0
+        ),
 
       rate:
         Number(
-          x.rate ??
-          x.price ??
+          item.rate ??
+          item.price ??
           0
         ),
 
       amount:
         Number(
-          x.amount ??
+          item.amount ??
           (
-            Number(x.qty||0) *
+            Number(item.qty || 0) *
             Number(
-              x.rate ??
-              x.price ??
+              item.rate ??
+              item.price ??
               0
             )
           )
@@ -2299,7 +1791,7 @@ function editEstimate(id){
 
 
   discountInput.value =
-    e.discount||0;
+    estimate.discount || 0;
 
 
   selectedProductData=null;
@@ -2315,6 +1807,11 @@ function editEstimate(id){
   liveAmount.textContent="0.00";
 
 
+  productResults
+    .classList
+    .add("hidden");
+
+
   renderItems();
 
   showPage("home");
@@ -2328,19 +1825,21 @@ function editEstimate(id){
 
 function deleteEstimate(id){
 
-  const e =
+  const estimate =
     estimates.find(
-      x=>x.id===id
+      e =>
+        String(e.id) ===
+        String(id)
     );
 
 
-  if(!e)
+  if(!estimate)
     return;
 
 
   if(
     !confirm(
-      `Delete ${e.number}?`
+      `Delete ${estimate.number}?`
     )
   )
     return;
@@ -2348,7 +1847,9 @@ function deleteEstimate(id){
 
   estimates =
     estimates.filter(
-      x=>x.id!==id
+      e =>
+        String(e.id) !==
+        String(id)
     );
 
 
@@ -2360,7 +1861,27 @@ function deleteEstimate(id){
 
 
 /* =====================================================
-   CLOSE PRODUCT SEARCH
+   PRODUCT LIST SEARCH
+===================================================== */
+
+productListSearch.addEventListener(
+  "input",
+  renderProducts
+);
+
+
+/* =====================================================
+   ESTIMATE SEARCH
+===================================================== */
+
+estimateSearch.addEventListener(
+  "input",
+  renderEstimates
+);
+
+
+/* =====================================================
+   CLOSE POPUP
 ===================================================== */
 
 document.addEventListener(
@@ -2375,25 +1896,11 @@ document.addEventListener(
         .classList
         .add("hidden");
 
+      highlightedProductIndex=-1;
+
     }
 
   }
-);
-
-
-/* =====================================================
-   PRODUCT SEARCH
-===================================================== */
-
-productSearch.addEventListener(
-  "input",
-  searchProducts
-);
-
-
-productSearch.addEventListener(
-  "focus",
-  searchProducts
 );
 
 
@@ -2403,7 +1910,7 @@ productSearch.addEventListener(
 
 function escapeHTML(value){
 
-  return String(value??"")
+  return String(value ?? "")
     .replace(/&/g,"&amp;")
     .replace(/</g,"&lt;")
     .replace(/>/g,"&gt;")
@@ -2434,7 +1941,11 @@ renderProducts();
 
 renderEstimates();
 
-</script>
 
-</body>
-</html>
+/*
+   Start on Billing page
+*/
+
+showPage("home");
+
+    </script>
